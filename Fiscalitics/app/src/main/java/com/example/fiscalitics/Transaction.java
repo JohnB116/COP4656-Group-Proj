@@ -7,21 +7,24 @@ enum TYPE {} //TBA
 
 public class Transaction {
 
-    private int Value;
-    private int ID;
-    private TYPE Type;
+    private float Value;
+    private String ID;
+    private TYPE Type; //TBA
     public Activity activity;
 
-    public Transaction(int v, int i, Activity a){
+    //Parameterized Constructor
+    public Transaction(float v, String i, Activity a){
         this.Value = v;
         this.ID = i;
         this.activity = a;
     }
 
-    public boolean Commit(){
+    //Use this to add a transaction to storage
+    public void Commit(){
         SharedPreferences TLog = activity.getApplicationContext().getSharedPreferences("TLog", 0);
         SharedPreferences.Editor Edit = TLog.edit();
-        //Edit.putInt("")
-        return true;
+        Edit.putFloat(this.ID, this.Value);
+        Edit.apply();
     }
+
 }
