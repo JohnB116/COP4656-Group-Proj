@@ -8,6 +8,7 @@
 
 
     <RelativeLayout
+        android:id="@+id/mainlayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -23,7 +24,7 @@
             android:layout_margin="10dp"
             android:text="Something about making money"
             android:id="@+id/textview1"
-            android:textSize="25dp"
+            android:textSize="25sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
@@ -31,7 +32,25 @@
             android:id="@+id/listview1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/textview1" />
+            android:layout_below="@+id/textview1" >
+        </ListView>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab"
+            app:backgroundTint="#000000"
+            app:fabSize="mini"
+            app:rippleColor="@color/design_default_color_background"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/money2"
+            android:layout_margin="16dp"
+            />
+
 
     </RelativeLayout>
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
