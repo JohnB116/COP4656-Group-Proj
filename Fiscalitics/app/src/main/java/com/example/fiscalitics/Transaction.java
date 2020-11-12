@@ -13,14 +13,14 @@ public class Transaction {
     public Activity activity;
 
     //Parameterized Constructor
-    public Transaction(float v, String i, Activity a){
+    public Transaction(float v, String i, Activity a) {
         this.Value = v;
         this.ID = i;
         this.activity = a;
     }
 
     //Use this to add a transaction to storage
-    public void Commit(){
+    public void Commit() {
         SharedPreferences TLog = activity.getApplicationContext().getSharedPreferences("TLog", 0);
         SharedPreferences.Editor Edit = TLog.edit();
         Edit.putFloat(this.ID, this.Value);
