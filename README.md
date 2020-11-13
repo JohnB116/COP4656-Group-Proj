@@ -1,3 +1,3 @@
-# COP4656-Group-Proj
+# Fiscalitics
 
 Spending tracker and analyzer for Android platform
