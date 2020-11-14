@@ -19,6 +19,14 @@ public class Transaction {
         this.activity = a;
     }
 
+    public float getValue(){
+        return this.Value;
+    }
+
+    public String getId(){
+        return this.ID;
+    }
+
     //Use this to add a transaction to storage
     public void Commit() {
         SharedPreferences TLog = activity.getApplicationContext().getSharedPreferences("TLog", 0);
