@@ -69,9 +69,11 @@ public class MainActivity extends AppCompatActivity {
                 builder.setPositiveButton("ADD", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        //getting the data entered into the view
-                        if (etView.getText().toString() != null) data = etView.getText().toString();
-                        else return; //can't let them enter null!
+
+
+                        if (etView.getText().toString() != null) data
+                                = etView.getText().toString(); //getting the data entered into the view
+                        else return;                           //can't let them enter null!
                         Intent theIntent = new Intent();
 
                         //Here is some code I added in to make the data easier
@@ -91,10 +93,11 @@ public class MainActivity extends AppCompatActivity {
                         etView.setText(null);                   //erasing the data from the view
                         Toast.makeText(getApplicationContext(), //debugging and whatnot
                                 "the data is " + data, Toast.LENGTH_SHORT).show();
+
+                        //Store count to SharedPreferences
                         count++;
                         editor.putInt("count", count);
                         editor.apply();
-
 
 
                     }

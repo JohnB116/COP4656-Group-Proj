@@ -23,6 +23,7 @@ public class MyListFragment extends Fragment {
 
     private MyListFragmentListener listener;
 
+    //***These three will be private once the refreshing is worked out***
     public ListView list;
     public ArrayAdapter<String> adapter;
     public ArrayList<String> listItems = new ArrayList<String>();
