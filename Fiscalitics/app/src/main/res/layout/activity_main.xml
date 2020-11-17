@@ -29,20 +29,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <FrameLayout
+        <LinearLayout
             android:layout_below="@+id/textview1"
             android:name="edu.fsu.cs.fiscalitics.ListFragment"
             android:id="@+id/listFragmentContainer"
+            android:orientation="vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
-        <ListView
-            android:id="@+id/listview1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-        />
+            <ListView
+                android:id="@+id/listview1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
-        </FrameLayout>
+        </LinearLayout>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab"
