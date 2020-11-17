@@ -25,7 +25,8 @@ public class MainActivity extends AppCompatActivity {
 
     /* using a TAG for logging. thought it would be useful for debugging ~_~ */
     private static final String TAG = MainActivity.class.getCanonicalName();
-    private int id = 0; //Add this to sharedpreferences eventually
+    private int id = 0;    //Add this to sharedpreferences eventually
+    private int count = 0; //count up items in storage
     private String data = null;
 
     @Override
@@ -34,8 +35,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         final EditText etView = new EditText(this);
-
+        final SharedPreferences sp = getSharedPreferences("TLog", Activity.MODE_PRIVATE);
+        final SharedPreferences.Editor editor = sp.edit();
         final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+
+        editor.putInt("count", count);
+        editor.apply();
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -54,8 +60,13 @@ public class MainActivity extends AppCompatActivity {
                 //setting the view in the dialog so the user can enter data.
                 builder.setView(etView);
 
+                final MyListFragment listfrag = new MyListFragment();
+                final FragmentTransaction trans = getSupportFragmentManager().beginTransaction();
+                trans.add(R.id.listFragmentContainer,listfrag,TAG);
+                trans.commit();
+
                 //simple button the user can press to submit their entry and exit the dialog.
-                builder.setPositiveButton("+", new DialogInterface.OnClickListener() {
+                builder.setPositiveButton("ADD", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         //getting the data entered into the view
@@ -73,10 +84,19 @@ public class MainActivity extends AppCompatActivity {
                         Log.v(TAG, "Transaction stored, value:" +
                                 myTransaction.getValue() + " ... ID:" + myTransaction.getId());
 
-                        theIntent.putExtra("data",data); //putting the data passed from the dialog view into the intent.
-                        etView.setText(null);//erasing the data from the view
+                        listfrag.listItems.add("Transaction " + id + ": " + data);
+                        listfrag.adapter.notifyDataSetChanged();
+
+                        theIntent.putExtra("data",data);        //putting the data passed from the dialog view into the intent.
+                        etView.setText(null);                   //erasing the data from the view
                         Toast.makeText(getApplicationContext(), //debugging and whatnot
                                 "the data is " + data, Toast.LENGTH_SHORT).show();
+                        count++;
+                        editor.putInt("count", count);
+                        editor.apply();
+
+
+
                     }
                 });
                 AlertDialog a = builder.create();
@@ -84,23 +104,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        MyListFragment listfrag = new MyListFragment();
-        FragmentTransaction trans = getSupportFragmentManager().beginTransaction();
-        trans.add(R.id.listFragmentContainer,listfrag,TAG);
-        trans.commit();
+
 
     }
 }
-
-        /*
-        int i = 1; //Arbitrary ID
-        String num = Integer.toString(i);
-
-        Transaction t = new Transaction(14.47f, num, this);
-        t.Commit();
-        Log.v("Log", "transaction stored");
-        SharedPreferences sp = getSharedPreferences("TLog", Activity.MODE_PRIVATE);
-        float the_value = sp.getFloat(num, 0.0f);
-        Log.v("Log", "The value stored is" + Float.toString(the_value));
-
-        */ //Just an example of adding a transaction to sharedpreferences with the class
