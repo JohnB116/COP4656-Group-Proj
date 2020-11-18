@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        overridePendingTransition(R.anim.enterl, R.anim.exitl);
 
         final EditText etView = new EditText(this);
         final SharedPreferences sp = getSharedPreferences("TLog", Activity.MODE_PRIVATE);
@@ -110,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
 
                         //store total to sharedpreferences
                         total += Float.parseFloat(data);
-                        editor.putFloat("data", total);
+                        editor.putFloat("total", total);
                         editor.apply();
 
                     }
