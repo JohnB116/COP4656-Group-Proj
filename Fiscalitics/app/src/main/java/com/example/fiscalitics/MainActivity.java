@@ -22,7 +22,7 @@ import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MyListFragment.MyListFragmentListener {
 
     boolean animate = false;
     float x1, x2, y1, y2;
@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
                         Intent theIntent = new Intent();
 
                         //Here is some code I added in to make the data easier
-                        //to store with SharedPreferences. --- Love, John
+                        //to store with SharedPreferences. --- Love, John0
                         id++;
                         Transaction myTransaction = new Transaction(Float.parseFloat(data),
                                 Integer.toString(id), MainActivity.this);
@@ -142,5 +142,12 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
         return false;
+    }
+
+    //need to implement this listener function to receive the item otherwise the app breaks. bummer, i know.
+    @Override
+    public void onListItemSelected(String input) {
+        //when the list item is selected, we will do something with it.
+        //but what do i know im just a kid.
     }
 }

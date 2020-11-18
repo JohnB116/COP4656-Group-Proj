@@ -23,6 +23,8 @@ public class MyListFragment extends Fragment {
 
     private MyListFragmentListener listener;
 
+    private static final String TAG = "ListFragment";
+
     //***These three will be private once the refreshing is worked out***
     public ListView list;
     public ArrayAdapter<String> adapter;
@@ -39,13 +41,11 @@ public class MyListFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
         adapter = new ArrayAdapter<String>(getActivity(),
                 android.R.layout.simple_list_item_1,listItems);
     }
@@ -87,5 +87,4 @@ public class MyListFragment extends Fragment {
         super.onDetach();
         listener = null;
     }
-
 }
