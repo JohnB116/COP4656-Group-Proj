@@ -124,7 +124,7 @@ public class MainActivity extends AppCompatActivity implements MyListFragment.My
     }
 
     //Launch a new activity when the user swipes right(Probably will be a summary page)
-    public boolean onTouchEvent(MotionEvent touchEvent){
+    public boolean onTouchEvent(MotionEvent touchEvent) {
         //Get swipe data
         switch(touchEvent.getAction()){
             case MotionEvent.ACTION_DOWN:
