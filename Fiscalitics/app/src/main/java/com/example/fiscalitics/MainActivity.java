@@ -16,11 +16,15 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Toast;
 
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.HashSet;
+import java.util.Set;
 
 public class MainActivity extends AppCompatActivity implements MyListFragment.MyListFragmentListener {
 
@@ -30,8 +34,9 @@ public class MainActivity extends AppCompatActivity implements MyListFragment.My
     /* using a TAG for logging. thought it would be useful for debugging ~_~ */
     private static final String TAG = MainActivity.class.getCanonicalName();
     private int id = 0;      //Add this to sharedpreferences eventually
-    private int count = 0;   //count up items in storage
+    private int count;   //count up items in storage
     private float total = 0; //add up all money spent
+
     private String data = null;
 
     @Override
@@ -45,8 +50,47 @@ public class MainActivity extends AppCompatActivity implements MyListFragment.My
         final SharedPreferences.Editor editor = sp.edit();
         final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 
-        editor.putInt("count", count);
-        editor.apply();
+        //Get total number of transactions
+        if(sp.getInt("count", -1) == -1) {
+            editor.putInt("count", 0);
+            editor.apply();
+        }
+        else{
+            count = sp.getInt("count", -1);
+        }
+
+        //Get total spent
+        if(sp.getFloat("total", -1.0f) == -1.0f){
+            //do nothing
+        }
+        else{
+            total = sp.getFloat("total", -1.0f);
+        }
+
+        //Get list of transactions
+        final Set<String> theSet = new HashSet<>();
+        if(sp.getStringSet("theSet", null) == null){
+            //do nothing
+        }
+        else{
+            theSet.addAll(sp.getStringSet("theSet", null));
+        }
+
+        final MyListFragment listfrag = new MyListFragment();
+        final FragmentTransaction trans = getSupportFragmentManager().beginTransaction();
+        trans.add(R.id.listFragmentContainer,listfrag,TAG);
+        trans.commit();
+
+        //This works for refreshing the list on restart,
+        //I don't know why, but we'll work with it
+        listfrag.adapter = new ArrayAdapter(this,
+                android.R.layout.simple_list_item_1,
+                listfrag.listItems);
+        //refresh listview on activity restart
+        if(theSet.size() > 0) {
+            listfrag.listItems.addAll(theSet);
+            listfrag.adapter.notifyDataSetChanged();
+        }
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,19 +107,12 @@ public class MainActivity extends AppCompatActivity implements MyListFragment.My
                 if(etView.getParent() != null) {
                     ((ViewGroup)etView.getParent()).removeView(etView);
                 }
-                //setting the view in the dialog so the user can enter data.
-                builder.setView(etView);
-
-                final MyListFragment listfrag = new MyListFragment();
-                final FragmentTransaction trans = getSupportFragmentManager().beginTransaction();
-                trans.add(R.id.listFragmentContainer,listfrag,TAG);
-                trans.commit();
+                builder.setView(etView);//setting the view in the dialog so the user can enter data.
 
                 //simple button the user can press to submit their entry and exit the dialog.
                 builder.setPositiveButton("ADD", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-
 
                         if (!etView.getText().toString().equals("")) {
                             //getting the data entered into the view
@@ -95,7 +132,8 @@ public class MainActivity extends AppCompatActivity implements MyListFragment.My
                         Log.v(TAG, "Transaction stored, value:" +
                                 myTransaction.getValue() + " ... ID:" + myTransaction.getId());
 
-                        listfrag.listItems.add("Transaction " + id + ": $" + data);
+                        //Add data to the list and display it
+                        listfrag.listItems.add(data);
                         listfrag.adapter.notifyDataSetChanged();
 
                         theIntent.putExtra("data",data);        //putting the data passed from the dialog view into the intent.
@@ -107,11 +145,12 @@ public class MainActivity extends AppCompatActivity implements MyListFragment.My
                         //Store count to SharedPreferences
                         count++;
                         editor.putInt("count", count);
-                        editor.apply();
-
                         //store total to sharedpreferences
                         total += Float.parseFloat(data);
                         editor.putFloat("total", total);
+                        //add the transaction to the list and commit
+                        theSet.add(data);
+                        editor.putStringSet("theSet", theSet);
                         editor.apply();
 
                     }
@@ -121,9 +160,11 @@ public class MainActivity extends AppCompatActivity implements MyListFragment.My
             }
         });
 
+
+
     }
 
-    //Launch a new activity when the user swipes right(Probably will be a summary page)
+    //Launch the Summary activity when the user swipes right
     public boolean onTouchEvent(MotionEvent touchEvent) {
         //Get swipe data
         switch(touchEvent.getAction()){

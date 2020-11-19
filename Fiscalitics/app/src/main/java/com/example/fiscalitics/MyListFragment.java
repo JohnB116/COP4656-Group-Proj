@@ -21,11 +21,10 @@ import java.util.Set;
 
 public class MyListFragment extends Fragment {
 
-    private MyListFragmentListener listener;
-
     private static final String TAG = "ListFragment";
 
     //***These three will be private once the refreshing is worked out***
+    public MyListFragmentListener listener;
     public ListView list;
     public ArrayAdapter<String> adapter;
     public ArrayList<String> listItems = new ArrayList<String>();
@@ -46,8 +45,17 @@ public class MyListFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        SharedPreferences sp = getContext().getSharedPreferences("TLog", Activity.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+
+        int count = sp.getInt("count", -1);
+        Log.v(TAG, "Count =" + String.valueOf(count));
+
         adapter = new ArrayAdapter<String>(getActivity(),
                 android.R.layout.simple_list_item_1,listItems);
+
+
     }
 
     @Override
