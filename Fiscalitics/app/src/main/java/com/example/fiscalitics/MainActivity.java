@@ -2,15 +2,13 @@ package com.example.fiscalitics;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
-
+import java.util.Calendar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
-import android.os.Handler;
 import android.text.InputType;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -133,7 +131,7 @@ public class MainActivity extends AppCompatActivity implements MyListFragment.My
                                 myTransaction.getValue() + " ... ID:" + myTransaction.getId());
 
                         //Add data to the list and display it
-                        listfrag.listItems.add(data);
+                        listfrag.listItems.add("$" + data + " " + Calendar.getInstance().getTime());
                         listfrag.adapter.notifyDataSetChanged();
 
                         theIntent.putExtra("data",data);        //putting the data passed from the dialog view into the intent.
@@ -149,7 +147,7 @@ public class MainActivity extends AppCompatActivity implements MyListFragment.My
                         total += Float.parseFloat(data);
                         editor.putFloat("total", total);
                         //add the transaction to the list and commit
-                        theSet.add(data);
+                        theSet.add("$" + data + " " + Calendar.getInstance().getTime());
                         editor.putStringSet("theSet", theSet);
                         editor.apply();
 
