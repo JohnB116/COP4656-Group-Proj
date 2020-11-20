@@ -26,7 +26,11 @@ public class Summary extends AppCompatActivity {
         TextView total = (TextView) findViewById(R.id.total);
         String disp = "Total spending: $" + String.valueOf(sp.getFloat("total", 0.0f));
 
+        TextView avg = (TextView) findViewById(R.id.avg);
+        String disp2 = "Average spending: $" + String.valueOf(sp.getFloat("average", 0.0f));
+
         total.setText(disp);
+        avg.setText(disp2);
 
     }
 

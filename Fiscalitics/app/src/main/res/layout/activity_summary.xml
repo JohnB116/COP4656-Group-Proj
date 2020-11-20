@@ -31,6 +31,17 @@
             android:textSize="20sp"
             tools:layout_editor_absoluteX="170dp"
             tools:layout_editor_absoluteY="228dp" />
+        <TextView
+            android:id="@+id/avg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/total"
+            android:paddingTop="15dp"
+            android:text="Your average daily spending: $"
+            android:textColor="#000000"
+            android:textSize="20sp"
+            tools:layout_editor_absoluteX="170dp"
+            tools:layout_editor_absoluteY="228dp" />
 
         <TextView
             android:id="@+id/message"

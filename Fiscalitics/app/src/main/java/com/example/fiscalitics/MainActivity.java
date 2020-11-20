@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements MyListFragment.My
     private int id = 0;      //Add this to sharedpreferences eventually
     private int count;   //count up items in storage
     private float total = 0; //add up all money spent
+    private float average = 0.0f;
 
     private String data = null;
 
@@ -70,17 +71,11 @@ public class MainActivity extends AppCompatActivity implements MyListFragment.My
             editor.putInt("count", 0);
             editor.apply();
         }
-        else{
-            count = sp.getInt("count", -1);
-        }
+        else{ count = sp.getInt("count", -1); }
 
         //Get total spent
-        if(sp.getFloat("total", -1.0f) == -1.0f){
-            //do nothing
-        }
-        else{
-            total = sp.getFloat("total", -1.0f);
-        }
+        if(sp.getFloat("total", -1.0f) == -1.0f){}
+        else{ total = sp.getFloat("total", -1.0f); }
 
         //Get list of transactions
         final Set<String> theSet = new HashSet<>();
@@ -89,6 +84,15 @@ public class MainActivity extends AppCompatActivity implements MyListFragment.My
         }
         else{
             theSet.addAll(sp.getStringSet("theSet", null));
+        }
+
+        if(sp.getFloat("average", -1.0f) == -1.0f){
+            //
+        }
+        else{
+            average = sp.getFloat("total", -1.0f)/sp.getInt("count", 1);
+            editor.putFloat("average", average);
+            editor.apply();
         }
 
         final MyListFragment listfrag = new MyListFragment();
@@ -166,15 +170,31 @@ public class MainActivity extends AppCompatActivity implements MyListFragment.My
                         //add the transaction to the list and commit
                         theSet.add("$" + data + " " + Calendar.getInstance().getTime());
                         editor.putStringSet("theSet", theSet);
+                        //Store average to sharedpreferences
+                        average = sp.getFloat("total", 0.0f)/sp.getInt("count", 1);
+                        editor.putFloat("average", average);
                         editor.apply();
 
                         //Launch dialog to enter Transaction information
-                        AlertDialog.Builder builder2 = new AlertDialog.Builder(MainActivity.this);
+                        final AlertDialog.Builder builder2 = new AlertDialog.Builder(MainActivity.this);
                         builder2.setTitle("Purchase Type").setMessage("What kind of purchase was this?");
+                        //this is used to remove the view that is created otherwise the app crashes.
+                        if(btnFood.getParent() != null) {
+                            ((ViewGroup)btnFood.getParent()).removeView(btnFood);
+                        }
                         radioGroup.addView(btnFood);
+                        if(btnEntertainment.getParent() != null) {
+                            ((ViewGroup)btnEntertainment.getParent()).removeView(btnEntertainment);
+                        }
                         radioGroup.addView(btnEntertainment);
+                        if(btnTravel.getParent() != null) {
+                            ((ViewGroup)btnTravel.getParent()).removeView(btnTravel);
+                        }
                         radioGroup.addView(btnTravel);
                         builder2.setView(radioGroup);
+                        if(radioGroup.getParent() != null) {
+                            ((ViewGroup)radioGroup.getParent()).removeView(radioGroup);
+                        }
                         builder2.setPositiveButton("ADD", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
@@ -183,6 +203,7 @@ public class MainActivity extends AppCompatActivity implements MyListFragment.My
                         });
                         AlertDialog b = builder2.create();
                         b.show();
+
                     }
                 });
                 AlertDialog a = builder.create();
@@ -190,8 +211,6 @@ public class MainActivity extends AppCompatActivity implements MyListFragment.My
 
             }
         });
-
-
 
     }
 
