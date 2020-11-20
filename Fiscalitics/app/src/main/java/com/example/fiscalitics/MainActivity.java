@@ -16,6 +16,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 
@@ -43,7 +45,17 @@ public class MainActivity extends AppCompatActivity implements MyListFragment.My
         setContentView(R.layout.activity_main);
         overridePendingTransition(R.anim.enterl, R.anim.exitl);
 
+        //this edit text is used for entering the amount of $$CASHMONEY$$ you spent *$wag*
         final EditText etView = new EditText(this);
+        //radio buttons for selecting what category your spending falls under.
+        final RadioGroup radioGroup = new RadioGroup(this);
+        final RadioButton btnEntertainment = new RadioButton(this);
+        final RadioButton btnFood = new RadioButton(this);
+        final RadioButton btnTravel = new RadioButton(this);
+        btnEntertainment.setText("Entertainment");
+        btnFood.setText("Food");
+        btnTravel.setText("Travel");
+
         final SharedPreferences sp = getSharedPreferences("TLog", Activity.MODE_PRIVATE);
         final SharedPreferences.Editor editor = sp.edit();
         final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -151,10 +163,20 @@ public class MainActivity extends AppCompatActivity implements MyListFragment.My
                         editor.putStringSet("theSet", theSet);
                         editor.apply();
 
+                        //Launch dialog to enter Transaction information
+                        AlertDialog.Builder builder2 = new AlertDialog.Builder(MainActivity.this);
+                        builder2.setTitle("Purchase Type").setMessage("What kind of purchase was this?");
+                        radioGroup.addView(btnFood);
+                        radioGroup.addView(btnEntertainment);
+                        radioGroup.addView(btnTravel);
+                        builder2.setView(radioGroup);
+                        AlertDialog b = builder2.create();
+                        b.show();
                     }
                 });
                 AlertDialog a = builder.create();
                 a.show();
+
             }
         });
 
