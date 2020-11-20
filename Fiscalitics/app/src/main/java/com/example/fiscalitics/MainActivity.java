@@ -11,6 +11,9 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,6 +41,8 @@ public class MainActivity extends AppCompatActivity implements MyListFragment.My
     private float total = 0; //add up all money spent
 
     private String data = null;
+
+    //is it ok if i make this a gwobal vawiable ? UwU
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -170,6 +175,12 @@ public class MainActivity extends AppCompatActivity implements MyListFragment.My
                         radioGroup.addView(btnEntertainment);
                         radioGroup.addView(btnTravel);
                         builder2.setView(radioGroup);
+                        builder2.setPositiveButton("ADD", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                            }
+                        });
                         AlertDialog b = builder2.create();
                         b.show();
                     }
@@ -210,5 +221,29 @@ public class MainActivity extends AppCompatActivity implements MyListFragment.My
     public void onListItemSelected(String input) {
         //when the list item is selected, we will do something with it.
         //but what do i know im just a kid.
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_exit_id:
+                finish();
+                System.exit(0);
+                break;
+        }
+        return true;
+    }
+
+    //since shared prefs. cannot be global, i gotta make a stupid function to handle clearing the data
+    public int wipe(SharedPreferences sp) {
+        if (sp.edit().clear().commit()) return 0;
+        else return -1;
     }
 }
