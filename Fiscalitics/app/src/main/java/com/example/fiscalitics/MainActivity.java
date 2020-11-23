@@ -139,16 +139,6 @@ public class MainActivity extends AppCompatActivity implements MyListFragment.My
                         else{return;}
                         Intent theIntent = new Intent();
 
-                        //Here is some code I added in to make the data easier
-                        //to store with SharedPreferences. --- Love, John0
-                        id++;
-                        Transaction myTransaction = new Transaction(Float.parseFloat(data),
-                                Integer.toString(id), MainActivity.this);
-                        myTransaction.Commit();
-
-                        Log.v(TAG, "Transaction stored, value:" +
-                                myTransaction.getValue() + " ... ID:" + myTransaction.getId());
-
                         //Add data to the list and display it
                         listfrag.listItems.add("$" + data + " " + Calendar.getInstance().getTime());
                         listfrag.adapter.notifyDataSetChanged();
@@ -160,9 +150,6 @@ public class MainActivity extends AppCompatActivity implements MyListFragment.My
                                 , Toast.LENGTH_SHORT).show();
 
 
-
-                        //
-
                         //Insert into the database via ContentProvider
                         ContentValues values = new ContentValues();
                         values.put(TransactionMain.TransactionEntry.COLUMN_VALUE, "$" + data);
@@ -170,9 +157,6 @@ public class MainActivity extends AppCompatActivity implements MyListFragment.My
                                 Calendar.getInstance().getTime().toString());
 
                         getContentResolver().insert(TransactionMain.TransactionEntry.CONTENT_URI,values);
-
-                        //
-
 
                         //Store count to SharedPreferences
                         count++;

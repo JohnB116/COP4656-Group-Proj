@@ -3,6 +3,8 @@ package com.example.fiscalitics;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -46,11 +48,6 @@ public class MyListFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        SharedPreferences sp = getContext().getSharedPreferences("TLog", Activity.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sp.edit();
-
-        int count = sp.getInt("count", -1);
-        Log.v(TAG, "Count =" + String.valueOf(count));
 
         adapter = new ArrayAdapter<String>(getActivity(),
                 android.R.layout.simple_list_item_1,listItems);
