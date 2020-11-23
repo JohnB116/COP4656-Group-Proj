@@ -178,7 +178,7 @@ public class MainActivity extends AppCompatActivity implements MyListFragment.My
                         //Launch dialog to enter Transaction information
                         final AlertDialog.Builder builder2 = new AlertDialog.Builder(MainActivity.this);
                         builder2.setTitle("Purchase Type").setMessage("What kind of purchase was this?");
-                        //this is used to remove the view that is created otherwise the app crashes.
+                        //this is used to remove the view that is created otherwise the app doesn't work.
                         if(btnFood.getParent() != null) {
                             ((ViewGroup)btnFood.getParent()).removeView(btnFood);
                         }
