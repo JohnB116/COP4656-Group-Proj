@@ -5,6 +5,7 @@ import androidx.fragment.app.FragmentTransaction;
 import java.util.Calendar;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -37,13 +38,10 @@ public class MainActivity extends AppCompatActivity implements MyListFragment.My
     /* using a TAG for logging. thought it would be useful for debugging ~_~ */
     private static final String TAG = MainActivity.class.getCanonicalName();
     private int id = 0;      //Add this to sharedpreferences eventually
-    private int count;   //count up items in storage
+    private int count = 0;   //count up items in storage
     private float total = 0; //add up all money spent
     private float average = 0.0f;
-
     private String data = null;
-
-    //is it ok if i make this a gwobal vawiable ? UwU
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -160,6 +158,21 @@ public class MainActivity extends AppCompatActivity implements MyListFragment.My
                         Toast.makeText(getApplicationContext(), //debugging and whatnot
                                 "Purchase or Transaction of $ " + data + " added"
                                 , Toast.LENGTH_SHORT).show();
+
+
+
+                        //
+
+                        //Insert into the database via ContentProvider
+                        ContentValues values = new ContentValues();
+                        values.put(TransactionMain.TransactionEntry.COLUMN_VALUE, "$" + data);
+                        values.put(TransactionMain.TransactionEntry.COLUMN_DATE,
+                                Calendar.getInstance().getTime().toString());
+
+                        getContentResolver().insert(TransactionMain.TransactionEntry.CONTENT_URI,values);
+
+                        //
+
 
                         //Store count to SharedPreferences
                         count++;

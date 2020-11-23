@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class TransactionDbHelper extends SQLiteOpenHelper {
 
-    public static final String DATABASE_NAME = "transactions.db";
+    public static final String DATABASE_NAME = "transactionList.db";
 
     private static final int DATABASE_VERSION = 1;
 
@@ -20,7 +20,7 @@ public class TransactionDbHelper extends SQLiteOpenHelper {
                 TransactionMain.TransactionEntry.TABLE_NAME + " (" +
                 TransactionMain.TransactionEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 TransactionMain.TransactionEntry.COLUMN_VALUE + " TEXT NOT NULL," +
-                TransactionMain.TransactionEntry.COLUMN_TYPE + " TEXT NOT NULL, " +
+                //TransactionMain.TransactionEntry.COLUMN_TYPE + " TEXT NOT NULL, " +
                 TransactionMain.TransactionEntry.COLUMN_DATE + " TEXT NOT NULL);";
 
         db.execSQL(SQL_CREATE_TRANSACTION_TABLE);
