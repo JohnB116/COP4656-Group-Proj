@@ -12,7 +12,7 @@
         <!-- The Transaction ContentProvider -->
         <provider
             android:name=".TransactionProvider"
-            android:authorities="com.example.todo"
+            android:authorities="com.example.transaction"
             android:exported="true" />
         <activity android:name=".Summary">
 
