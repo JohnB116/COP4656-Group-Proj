@@ -9,6 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <!-- The Transaction ContentProvider -->
+        <provider
+            android:name=".TransactionProvider"
+            android:authorities="com.example.todo"
+            android:exported="true" />
         <activity android:name=".Summary">
 
         </activity>

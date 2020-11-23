@@ -20,7 +20,8 @@ public class TransactionDbHelper extends SQLiteOpenHelper {
                 TransactionMain.TransactionEntry.TABLE_NAME + " (" +
                 TransactionMain.TransactionEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 TransactionMain.TransactionEntry.COLUMN_VALUE + " TEXT NOT NULL," +
-                TransactionMain.TransactionEntry.COLUMN_TYPE + " TEXT NOT NULL);";
+                TransactionMain.TransactionEntry.COLUMN_TYPE + " TEXT NOT NULL, " +
+                TransactionMain.TransactionEntry.COLUMN_DATE + " TEXT NOT NULL);";
 
         db.execSQL(SQL_CREATE_TRANSACTION_TABLE);
     }
