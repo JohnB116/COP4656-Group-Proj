@@ -9,6 +9,7 @@ import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
@@ -98,17 +99,21 @@ public class MainActivity extends AppCompatActivity implements MyListFragment.My
         trans.add(R.id.listFragmentContainer,listfrag,TAG);
         trans.commit();
 
-        //This works for refreshing the list on restart,
-        //I don't know why, but we'll work with it
+        //On restart of application or activity, this will refresh the ListView
         listfrag.adapter = new ArrayAdapter(this,
                 android.R.layout.simple_list_item_1,
                 listfrag.listItems);
-        //refresh listview on activity restart
-        if(theSet.size() > 0) {
-            listfrag.listItems.addAll(theSet);
+        Cursor cursor = getContentResolver()
+                .query(TransactionMain.TransactionEntry.CONTENT_URI, null, null, null, null);
+        if(cursor != null && cursor.getCount() > 0){
+            cursor.moveToFirst();
+            do {
+                listfrag.listItems.add(cursor.getString(1) + " " + cursor.getString(2));
+            } while (cursor.moveToNext());
             listfrag.adapter.notifyDataSetChanged();
         }
 
+        //Floating action button actions
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -139,16 +144,12 @@ public class MainActivity extends AppCompatActivity implements MyListFragment.My
                         else{return;}
                         Intent theIntent = new Intent();
 
-                        //Add data to the list and display it
-                        listfrag.listItems.add("$" + data + " " + Calendar.getInstance().getTime());
-                        listfrag.adapter.notifyDataSetChanged();
-
                         theIntent.putExtra("data",data);        //putting the data passed from the dialog view into the intent.
                         etView.setText(null);                   //erasing the data from the view
                         Toast.makeText(getApplicationContext(), //debugging and whatnot
                                 "Purchase or Transaction of $ " + data + " added"
                                 , Toast.LENGTH_SHORT).show();
-
+                        count++;
 
                         //Insert into the database via ContentProvider
                         ContentValues values = new ContentValues();
@@ -158,8 +159,17 @@ public class MainActivity extends AppCompatActivity implements MyListFragment.My
 
                         getContentResolver().insert(TransactionMain.TransactionEntry.CONTENT_URI,values);
 
+                        Cursor cursor = getContentResolver()
+                                .query(TransactionMain.TransactionEntry.CONTENT_URI, null, null, null, null);
+                        if(cursor != null && cursor.getCount() > 0){
+                            cursor.moveToPosition(count - 1);
+                            do {
+                                listfrag.listItems.add(cursor.getString(1) + " " + cursor.getString(2));
+                            } while (cursor.moveToNext());
+                            listfrag.adapter.notifyDataSetChanged();
+                        }
+
                         //Store count to SharedPreferences
-                        count++;
                         editor.putInt("count", count);
                         //store total to sharedpreferences
                         total += Float.parseFloat(data);
