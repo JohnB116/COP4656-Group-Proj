@@ -2,6 +2,8 @@ package com.example.fiscalitics;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
+
+import java.math.BigDecimal;
 import java.util.Calendar;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -38,9 +40,8 @@ public class MainActivity extends AppCompatActivity implements MyListFragment.My
 
     /* using a TAG for logging. thought it would be useful for debugging ~_~ */
     private static final String TAG = MainActivity.class.getCanonicalName();
-    private int id = 0;      //Add this to sharedpreferences eventually
     private int count = 0;   //count up items in storage
-    private float total = 0; //add up all money spent
+    private float total = 0.0f; //add up all money spent
     private float average = 0.0f;
     private String data = null;
 
@@ -76,17 +77,8 @@ public class MainActivity extends AppCompatActivity implements MyListFragment.My
         if(sp.getFloat("total", -1.0f) == -1.0f){}
         else{ total = sp.getFloat("total", -1.0f); }
 
-        //Get list of transactions
-        final Set<String> theSet = new HashSet<>();
-        if(sp.getStringSet("theSet", null) == null){
-            //do nothing
-        }
-        else{
-            theSet.addAll(sp.getStringSet("theSet", null));
-        }
-
         if(sp.getFloat("average", -1.0f) == -1.0f){
-            //
+            editor.putFloat("average", 0.0f);
         }
         else{
             average = sp.getFloat("total", -1.0f)/sp.getInt("count", 1);
@@ -122,7 +114,7 @@ public class MainActivity extends AppCompatActivity implements MyListFragment.My
 
                 //Launch dialog to enter Transaction information
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                builder.setTitle("New transaction").setMessage("Enter a new transaction you made...");
+                builder.setTitle("New transaction").setMessage("Enter a new transaction you made:");
                 etView.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL | InputType.TYPE_CLASS_NUMBER);
 
                 //this is used to remove the edit text view that is created otherwise the app crashes.
@@ -152,12 +144,10 @@ public class MainActivity extends AppCompatActivity implements MyListFragment.My
                         count++;
 
                         //Insert into the database via ContentProvider
-                        ContentValues values = new ContentValues();
+                        final ContentValues values = new ContentValues();
                         values.put(TransactionMain.TransactionEntry.COLUMN_VALUE, "$" + data);
                         values.put(TransactionMain.TransactionEntry.COLUMN_DATE,
                                 Calendar.getInstance().getTime().toString());
-
-                        getContentResolver().insert(TransactionMain.TransactionEntry.CONTENT_URI,values);
 
                         Cursor cursor = getContentResolver()
                                 .query(TransactionMain.TransactionEntry.CONTENT_URI, null, null, null, null);
@@ -174,9 +164,6 @@ public class MainActivity extends AppCompatActivity implements MyListFragment.My
                         //store total to sharedpreferences
                         total += Float.parseFloat(data);
                         editor.putFloat("total", total);
-                        //add the transaction to the list and commit
-                        theSet.add("$" + data + " " + Calendar.getInstance().getTime());
-                        editor.putStringSet("theSet", theSet);
                         //Store average to sharedpreferences
                         average = sp.getFloat("total", 0.0f)/sp.getInt("count", 1);
                         editor.putFloat("average", average);
@@ -202,10 +189,36 @@ public class MainActivity extends AppCompatActivity implements MyListFragment.My
                         if(radioGroup.getParent() != null) {
                             ((ViewGroup)radioGroup.getParent()).removeView(radioGroup);
                         }
+
+                        //Check for what radiobutton is clicked once the 'add' button is clicked
                         builder2.setPositiveButton("ADD", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-
+                                    if(btnFood.isChecked()){
+                                        values.put(TransactionMain.TransactionEntry.COLUMN_TYPE, "Food");
+                                    }
+                                    else if(btnEntertainment.isChecked()){
+                                        values.put(TransactionMain.TransactionEntry.COLUMN_TYPE, "Entertainment");
+                                    }
+                                    else if(btnTravel.isChecked()){
+                                        values.put(TransactionMain.TransactionEntry.COLUMN_TYPE, "Travel");
+                                    }
+                                    else{
+                                        values.put(TransactionMain.TransactionEntry.COLUMN_TYPE, "Unknown");
+                                    }
+                                    //Commit Content Provider entry
+                                    getContentResolver().insert(TransactionMain.TransactionEntry.CONTENT_URI
+                                    , values);
+                                    //Doing the whole refreshing thing again
+                                    Cursor cursor = getContentResolver()
+                                            .query(TransactionMain.TransactionEntry.CONTENT_URI, null, null, null, null);
+                                    if(cursor != null && cursor.getCount() > 0){
+                                        cursor.moveToPosition(count - 1);
+                                        do {
+                                            listfrag.listItems.add(cursor.getString(1) + " " + cursor.getString(2));
+                                        } while (cursor.moveToNext());
+                                        listfrag.adapter.notifyDataSetChanged();
+                                    }
                             }
                         });
                         AlertDialog b = builder2.create();
@@ -245,8 +258,7 @@ public class MainActivity extends AppCompatActivity implements MyListFragment.My
     //need to implement this listener function to receive the item otherwise the app breaks. bummer, i know.
     @Override
     public void onListItemSelected(String input) {
-        //when the list item is selected, we will do something with it.
-        //but what do i know im just a kid.
+        Log.v(TAG, "Clicked");
     }
 
     @Override
