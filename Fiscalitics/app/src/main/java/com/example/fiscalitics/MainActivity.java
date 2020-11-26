@@ -149,16 +149,6 @@ public class MainActivity extends AppCompatActivity implements MyListFragment.My
                         values.put(TransactionMain.TransactionEntry.COLUMN_DATE,
                                 Calendar.getInstance().getTime().toString());
 
-                        Cursor cursor = getContentResolver()
-                                .query(TransactionMain.TransactionEntry.CONTENT_URI, null, null, null, null);
-                        if(cursor != null && cursor.getCount() > 0){
-                            cursor.moveToPosition(count - 1);
-                            do {
-                                listfrag.listItems.add(cursor.getString(1) + " " + cursor.getString(2));
-                            } while (cursor.moveToNext());
-                            listfrag.adapter.notifyDataSetChanged();
-                        }
-
                         //Store count to SharedPreferences
                         editor.putInt("count", count);
                         //store total to sharedpreferences
