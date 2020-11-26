@@ -258,7 +258,6 @@ public class MainActivity extends AppCompatActivity implements MyListFragment.My
     //need to implement this listener function to receive the item otherwise the app breaks. bummer, i know.
     @Override
     public void onListItemSelected(String input) {
-        Log.v(TAG, "Clicked");
     }
 
     @Override
