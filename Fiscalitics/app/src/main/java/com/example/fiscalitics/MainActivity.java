@@ -148,7 +148,7 @@ public class MainActivity extends AppCompatActivity implements MyListFragment.My
                         final DateTimeFormatter date = DateTimeFormatter.ofPattern("MM/dd/yyyy");
                         final DateTimeFormatter day = DateTimeFormatter.ofPattern("E");
                         final DateTimeFormatter time = DateTimeFormatter.ofPattern("HH:mm");
-                        values.put(TransactionMain.TransactionEntry.COLUMN_VALUE, "$" + data);
+                        values.put(TransactionMain.TransactionEntry.COLUMN_VALUE, "$" + String.format("%.2f", Float.valueOf(data)));
                         values.put(TransactionMain.TransactionEntry.COLUMN_DATE, LocalDateTime.now().format(date));
                         values.put(TransactionMain.TransactionEntry.COLUMN_DAY, LocalDateTime.now().format(day));
                         values.put(TransactionMain.TransactionEntry.COLUMN_TIME, LocalDateTime.now().format(time));
