@@ -1,9 +1,13 @@
 package com.example.fiscalitics;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -12,6 +16,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
@@ -58,33 +63,27 @@ public class MainActivity extends AppCompatActivity implements MyListFragment.My
         final RadioButton btnEntertainment = new RadioButton(this);
         final RadioButton btnFood = new RadioButton(this);
         final RadioButton btnTravel = new RadioButton(this);
+        final RadioButton btnGas = new RadioButton(this);
         btnEntertainment.setText("Entertainment");
-        btnFood.setText("Food");
+        btnFood.setText("Grocery");
         btnTravel.setText("Travel");
+        btnGas.setText("Gas/Automotive");
 
         final SharedPreferences sp = getSharedPreferences("TLog", Activity.MODE_PRIVATE);
         final SharedPreferences.Editor editor = sp.edit();
         final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 
         //Get total number of transactions
-        if(sp.getInt("count", -1) == -1) {
-            editor.putInt("count", 0);
-            editor.apply();
-        }
+        if(sp.getInt("count", -1) == -1) { }
         else{ count = sp.getInt("count", -1); }
 
         //Get total spent
         if(sp.getFloat("total", -1.0f) == -1.0f){}
         else{ total = sp.getFloat("total", -1.0f); }
 
-        if(sp.getFloat("average", -1.0f) == -1.0f){
-            editor.putFloat("average", 0.0f);
-        }
-        else{
-            average = sp.getFloat("total", -1.0f)/sp.getInt("count", 1);
-            editor.putFloat("average", average);
-            editor.apply();
-        }
+        //Get average transaction val
+        if(sp.getFloat("average", -1.0f) == -1.0f){ }
+        else{ average = sp.getFloat("total", -1.0f)/sp.getInt("count", 1); }
 
         final MyListFragment listfrag = new MyListFragment();
         final FragmentTransaction trans = getSupportFragmentManager().beginTransaction();
@@ -100,7 +99,7 @@ public class MainActivity extends AppCompatActivity implements MyListFragment.My
         if(cursor != null && cursor.getCount() > 0){
             cursor.moveToFirst();
             do {
-                listfrag.listItems.add(cursor.getString(1) + " " + cursor.getString(2));
+                listfrag.listItems.add(cursor.getString(5) + ": " + cursor.getString(1));
             } while (cursor.moveToNext());
             listfrag.adapter.notifyDataSetChanged();
         }
@@ -125,6 +124,7 @@ public class MainActivity extends AppCompatActivity implements MyListFragment.My
 
                 //simple button the user can press to submit their entry and exit the dialog.
                 builder.setPositiveButton("ADD", new DialogInterface.OnClickListener() {
+                    @RequiresApi(api = Build.VERSION_CODES.O)
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
 
@@ -145,9 +145,13 @@ public class MainActivity extends AppCompatActivity implements MyListFragment.My
 
                         //Insert into the database via ContentProvider
                         final ContentValues values = new ContentValues();
+                        final DateTimeFormatter date = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+                        final DateTimeFormatter day = DateTimeFormatter.ofPattern("E");
+                        final DateTimeFormatter time = DateTimeFormatter.ofPattern("HH:mm");
                         values.put(TransactionMain.TransactionEntry.COLUMN_VALUE, "$" + data);
-                        values.put(TransactionMain.TransactionEntry.COLUMN_DATE,
-                                Calendar.getInstance().getTime().toString());
+                        values.put(TransactionMain.TransactionEntry.COLUMN_DATE, LocalDateTime.now().format(date));
+                        values.put(TransactionMain.TransactionEntry.COLUMN_DAY, LocalDateTime.now().format(day));
+                        values.put(TransactionMain.TransactionEntry.COLUMN_TIME, LocalDateTime.now().format(time));
 
                         //Store count to SharedPreferences
                         editor.putInt("count", count);
@@ -155,7 +159,7 @@ public class MainActivity extends AppCompatActivity implements MyListFragment.My
                         total += Float.parseFloat(data);
                         editor.putFloat("total", total);
                         //Store average to sharedpreferences
-                        average = sp.getFloat("total", 0.0f)/sp.getInt("count", 1);
+                        average = total/count;
                         editor.putFloat("average", average);
                         editor.apply();
 
@@ -171,6 +175,10 @@ public class MainActivity extends AppCompatActivity implements MyListFragment.My
                             ((ViewGroup)btnEntertainment.getParent()).removeView(btnEntertainment);
                         }
                         radioGroup.addView(btnEntertainment);
+                        if(btnGas.getParent() != null) {
+                            ((ViewGroup)btnGas.getParent()).removeView(btnGas);
+                        }
+                        radioGroup.addView(btnGas);
                         if(btnTravel.getParent() != null) {
                             ((ViewGroup)btnTravel.getParent()).removeView(btnTravel);
                         }
@@ -193,6 +201,9 @@ public class MainActivity extends AppCompatActivity implements MyListFragment.My
                                     else if(btnTravel.isChecked()){
                                         values.put(TransactionMain.TransactionEntry.COLUMN_TYPE, "Travel");
                                     }
+                                    else if(btnGas.isChecked()){
+                                        values.put(TransactionMain.TransactionEntry.COLUMN_TYPE, "Gas/Automotive");
+                                    }
                                     else{
                                         values.put(TransactionMain.TransactionEntry.COLUMN_TYPE, "Unknown");
                                     }
@@ -205,7 +216,7 @@ public class MainActivity extends AppCompatActivity implements MyListFragment.My
                                     if(cursor != null && cursor.getCount() > 0){
                                         cursor.moveToPosition(count - 1);
                                         do {
-                                            listfrag.listItems.add(cursor.getString(1) + " " + cursor.getString(2));
+                                            listfrag.listItems.add(cursor.getString(5) + ": " + cursor.getString(1));
                                         } while (cursor.moveToNext());
                                         listfrag.adapter.notifyDataSetChanged();
                                     }

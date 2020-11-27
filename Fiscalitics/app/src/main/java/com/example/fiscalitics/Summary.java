@@ -24,10 +24,10 @@ public class Summary extends AppCompatActivity {
         overridePendingTransition(R.anim.enter, R.anim.exit);
 
         TextView total = (TextView) findViewById(R.id.total);
-        String disp = "Total spending: $" + String.valueOf(sp.getFloat("total", 0.0f));
+        String disp = "Total Spending: $" + String.format("%.2f", sp.getFloat("total", 0.0f));
 
         TextView avg = (TextView) findViewById(R.id.avg);
-        String disp2 = "Average spending: $" + String.valueOf(sp.getFloat("average", 0.0f));
+        String disp2 = "Average Transaction Value: $" + String.format("%.2f", sp.getFloat("average", 0.0f));
 
         total.setText(disp);
         avg.setText(disp2);
