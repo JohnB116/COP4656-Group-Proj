@@ -24,9 +24,11 @@ public class Category extends AppCompatActivity {
 
         Button btnFood = (Button) findViewById(R.id.categoryFood);
         Button btnEntertainment = (Button) findViewById(R.id.categoryEntertainment);
-        Button btnTravel = (Button) findViewById(R.id.categoryTravel);
+        Button btnTravel = (Button) findViewById(R.id.categoryHome);
         Button btnCar = (Button) findViewById(R.id.categoryCar);
+        Button btnEdu = (Button) findViewById(R.id.categoryEdu);
         Button btnMisc = (Button) findViewById(R.id.categoryMisc);
+
 
         btnFood.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,6 +55,12 @@ public class Category extends AppCompatActivity {
         });
 
         btnCar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+            }
+        });
+
+        btnEdu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
             }

@@ -72,12 +72,14 @@ public class MainActivity extends AppCompatActivity implements MyListFragment.My
         final RadioGroup radioGroup = new RadioGroup(this);
         final RadioButton btnEntertainment = new RadioButton(this);
         final RadioButton btnFood = new RadioButton(this);
-        final RadioButton btnTravel = new RadioButton(this);
+        final RadioButton btnHome = new RadioButton(this);
         final RadioButton btnGas = new RadioButton(this);
-        btnEntertainment.setText("Entertainment");
-        btnFood.setText("Grocery");
-        btnTravel.setText("Travel");
+        final RadioButton btnEdu = new RadioButton(this);
+        btnEntertainment.setText("Social/Drinks/Entertainment");
+        btnFood.setText("Grocery/Food");
+        btnHome.setText("Home/Living/Rent");
         btnGas.setText("Gas/Automotive");
+        btnEdu.setText("School or Study supplies");
 
         final SharedPreferences sp = getSharedPreferences("TLog", Activity.MODE_PRIVATE);
         final SharedPreferences.Editor editor = sp.edit();
@@ -186,14 +188,18 @@ public class MainActivity extends AppCompatActivity implements MyListFragment.My
                             ((ViewGroup)btnEntertainment.getParent()).removeView(btnEntertainment);
                         }
                         radioGroup.addView(btnEntertainment);
+                        if(btnEdu.getParent() != null) {
+                            ((ViewGroup)btnEdu.getParent()).removeView(btnEdu);
+                        }
+                        radioGroup.addView(btnEdu);
                         if(btnGas.getParent() != null) {
                             ((ViewGroup)btnGas.getParent()).removeView(btnGas);
                         }
                         radioGroup.addView(btnGas);
-                        if(btnTravel.getParent() != null) {
-                            ((ViewGroup)btnTravel.getParent()).removeView(btnTravel);
+                        if(btnHome.getParent() != null) {
+                            ((ViewGroup)btnHome.getParent()).removeView(btnHome);
                         }
-                        radioGroup.addView(btnTravel);
+                        radioGroup.addView(btnHome);
                         builder2.setView(radioGroup);
                         if(radioGroup.getParent() != null) {
                             ((ViewGroup)radioGroup.getParent()).removeView(radioGroup);
@@ -204,16 +210,19 @@ public class MainActivity extends AppCompatActivity implements MyListFragment.My
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                     if(btnFood.isChecked()){
-                                        values.put(TransactionMain.TransactionEntry.COLUMN_TYPE, "Food");
+                                        values.put(TransactionMain.TransactionEntry.COLUMN_TYPE, "Grocery/Food");
                                     }
                                     else if(btnEntertainment.isChecked()){
-                                        values.put(TransactionMain.TransactionEntry.COLUMN_TYPE, "Entertainment");
+                                        values.put(TransactionMain.TransactionEntry.COLUMN_TYPE, "Social/Drinks/Entertainment");
                                     }
-                                    else if(btnTravel.isChecked()){
-                                        values.put(TransactionMain.TransactionEntry.COLUMN_TYPE, "Travel");
+                                    else if(btnHome.isChecked()){
+                                        values.put(TransactionMain.TransactionEntry.COLUMN_TYPE, "Home/Living/Rent");
                                     }
                                     else if(btnGas.isChecked()){
                                         values.put(TransactionMain.TransactionEntry.COLUMN_TYPE, "Gas/Automotive");
+                                    }
+                                    else if(btnEdu.isChecked()){
+                                        values.put(TransactionMain.TransactionEntry.COLUMN_TYPE, "School or Study Supplies");
                                     }
                                     else{
                                         values.put(TransactionMain.TransactionEntry.COLUMN_TYPE, "Unknown");

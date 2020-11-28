@@ -21,7 +21,7 @@
             android:id="@+id/categoryFood"
             android:layout_centerHorizontal="true"
             android:layout_below="@+id/textViewHeader"
-            android:text="Food"
+            android:text="Grocery/Food"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
@@ -29,30 +29,38 @@
             android:id="@+id/categoryEntertainment"
             android:layout_centerHorizontal="true"
             android:layout_below="@+id/categoryFood"
-            android:text="Entertainment"
+            android:text="Social/Drinks/Entertainment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
         <Button
-            android:id="@+id/categoryTravel"
+            android:id="@+id/categoryHome"
             android:layout_centerHorizontal="true"
             android:layout_below="@+id/categoryEntertainment"
-            android:text="Travel"
+            android:text="Home/Living/Rent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
         <Button
             android:id="@+id/categoryCar"
             android:layout_centerHorizontal="true"
-            android:layout_below="@+id/categoryTravel"
+            android:layout_below="@+id/categoryHome"
             android:text="Gas / Automotive"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:id="@+id/categoryEdu"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/categoryCar"
+            android:text="School or Study materials"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
         <Button
             android:id="@+id/categoryMisc"
             android:layout_centerHorizontal="true"
-            android:layout_below="@+id/categoryCar"
+            android:layout_below="@+id/categoryEdu"
             android:text="Miscellaneous"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
