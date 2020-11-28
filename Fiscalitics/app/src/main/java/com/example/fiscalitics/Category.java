@@ -7,15 +7,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentTransaction;
-
-import com.github.mikephil.charting.charts.PieChart;
-import com.github.mikephil.charting.data.PieData;
-import com.github.mikephil.charting.data.PieDataSet;
-import com.github.mikephil.charting.data.PieEntry;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class Category extends AppCompatActivity {
 
@@ -40,8 +31,9 @@ public class Category extends AppCompatActivity {
         btnFood.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(Category.this,MyPieChart.class);
+                Intent i = new Intent(getApplicationContext(), MyPieChart.class);
                 startActivity(i);
+                finish();
             }
         });
 
@@ -50,6 +42,7 @@ public class Category extends AppCompatActivity {
             public void onClick(View view) {
                 Intent i = new Intent(Category.this, MyPieChart.class);
                 startActivity(i);
+                finish();
             }
         });
 
@@ -75,9 +68,9 @@ public class Category extends AppCompatActivity {
     }
 
     //Launch a main activity when the user swipes right
-    public boolean onTouchEvent(MotionEvent touchEvent){
+    public boolean onTouchEvent(MotionEvent touchEvent) {
         //Get swipe data
-        switch(touchEvent.getAction()){
+        switch(touchEvent.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 x1 = touchEvent.getX();
                 y1 = touchEvent.getY();
@@ -85,9 +78,9 @@ public class Category extends AppCompatActivity {
             case MotionEvent.ACTION_UP:
                 x2 = touchEvent.getX();
                 y2 = touchEvent.getY();
-                if(x2 < x1){
+                if(x2 < x1) {
                     //Launch new page
-                    Intent i = new Intent(Category.this, MainActivity.class);
+                    Intent i = new Intent(this, MainActivity.class);
                     i.putExtra("direction", "l");
                     startActivity(i);
                     finish();

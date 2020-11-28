@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.util.Log;
 import android.view.MotionEvent;
 
 import androidx.annotation.Nullable;
@@ -30,46 +31,20 @@ public class MyPieChart extends AppCompatActivity {
         super.onCreate(savedInstanceState, persistentState);
         setContentView(R.layout.activity_piechart);
 
+        Log.v("TAG","hummina");
+
         //Animate lateral slide-in
         overridePendingTransition(R.anim.exit, R.anim.enterl);
 
         chart = findViewById(R.id.pieChart);
-        chart.setUsePercentValues(true);
-        chart.getDescription().setEnabled(false);
-        chart.setExtraOffsets(5, 10, 5, 5);
-
-        chart.setDragDecelerationFrictionCoef(0.95f);
-
-        //chart.setCenterTextTypeface();
-        //chart.setCenterText(generateCenterSpannableText());
-
-        chart.setDrawHoleEnabled(true);
-        chart.setHoleColor(Color.WHITE);
-
-        chart.setTransparentCircleColor(Color.WHITE);
-        chart.setTransparentCircleAlpha(110);
-
-        chart.setHoleRadius(58f);
-        chart.setTransparentCircleRadius(61f);
-
-        chart.setDrawCenterText(true);
-
-        chart.setRotationAngle(0);
-        // enable rotation of the chart by touch
-        chart.setRotationEnabled(true);
-        chart.setHighlightPerTapEnabled(true);
-
-        // chart.setUnit(" €");
-        // chart.setDrawUnitsInChart(true);
-
-        // add a selection listener
+        chart.setCenterText("boogers");
 
     }
 
     //
-    public boolean onTouchEvent(MotionEvent touchEvent){
+    public boolean onTouchEvent(MotionEvent touchEvent) {
         //Get swipe data
-        switch(touchEvent.getAction()){
+        switch(touchEvent.getAction()) {
             case MotionEvent.ACTION_UP:
                 x1 = touchEvent.getX();
                 y1 = touchEvent.getY();
@@ -77,9 +52,9 @@ public class MyPieChart extends AppCompatActivity {
             case MotionEvent.ACTION_DOWN:
                 x2 = touchEvent.getX();
                 y2 = touchEvent.getY();
-                if(y2 < y1){
+                if(y2 < y1) {
                     //Launch new page
-                    Intent i = new Intent(MyPieChart.this, Category.class);
+                    Intent i = new Intent(this, Category.class);
                     i.putExtra("direction", "l");
                     startActivity(i);
                     finish();
