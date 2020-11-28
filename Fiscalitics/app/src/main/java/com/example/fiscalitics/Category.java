@@ -23,10 +23,6 @@ public class Category extends AppCompatActivity {
 
     float x1, x2, y1, y2;
 
-    PieChart pieChart;
-    PieData pieData;
-    List<PieEntry> pieEntryList = new ArrayList<>();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,25 +40,16 @@ public class Category extends AppCompatActivity {
         final PieChartFragment piechartfrag = new PieChartFragment();
         final FragmentTransaction trans = getSupportFragmentManager().beginTransaction();
 
-        pieChart = findViewById(R.id.pieChart);
-       // if (pieChart == null) Log.v("nigga","BROKEN");
-//        pieChart.setUsePercentValues(true);
-//        pieEntryList.add(new PieEntry(10,"India"));
-//        pieEntryList.add(new PieEntry(5,"US"));
-//        pieEntryList.add(new PieEntry(7,"UK"));
-//        pieEntryList.add(new PieEntry(3,"NZ"));
-//        PieDataSet pieDataSet = new PieDataSet(pieEntryList,"country");
-//        pieData = new PieData(pieDataSet);
-//        pieChart.setData(pieData);
-//        pieChart.invalidate();
-
         trans.add(R.id.pieChartFragmentContainer,piechartfrag,TAG);
+
 
         btnFood.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (!trans.isEmpty()) trans.remove(piechartfrag);
                 trans.commit();
+                Intent i = new Intent(Category.this,MyPieChart.class);
+                startActivity(i);
             }
         });
 
@@ -71,6 +58,8 @@ public class Category extends AppCompatActivity {
             public void onClick(View view) {
 //                if (!trans.isEmpty()) trans.remove(piechartfrag);
 //                trans.commit();
+                Intent i = new Intent(Category.this, MyPieChart.class);
+                startActivity(i);
             }
         });
 

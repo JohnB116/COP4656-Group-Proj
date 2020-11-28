@@ -16,6 +16,7 @@
             android:exported="false" />
         <activity android:name=".Summary"></activity>
         <activity android:name=".Category"></activity>
+        <activity android:name=".MyPieChart"></activity>
 
         <activity android:name=".MainActivity">
             <intent-filter>
