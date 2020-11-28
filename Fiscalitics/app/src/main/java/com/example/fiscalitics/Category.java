@@ -2,9 +2,10 @@ package com.example.fiscalitics;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MotionEvent;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,7 +20,48 @@ public class Category extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category);
         //Animate lateral slide-in
-        overridePendingTransition(R.anim.enterl, R.anim.exit);
+        overridePendingTransition(R.anim.enterl, R.anim.exitl);
+
+        Button btnFood = (Button) findViewById(R.id.categoryFood);
+        Button btnEntertainment = (Button) findViewById(R.id.categoryEntertainment);
+        Button btnTravel = (Button) findViewById(R.id.categoryTravel);
+        Button btnCar = (Button) findViewById(R.id.categoryCar);
+        Button btnMisc = (Button) findViewById(R.id.categoryMisc);
+
+        btnFood.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+        btnEntertainment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+        btnTravel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+        btnCar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+        btnMisc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
     }
 
     //Launch a main activity when the user swipes right
