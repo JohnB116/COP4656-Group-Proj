@@ -37,17 +37,12 @@ public class Category extends AppCompatActivity {
         Button btnCar = (Button) findViewById(R.id.categoryCar);
         Button btnMisc = (Button) findViewById(R.id.categoryMisc);
 
-        final PieChartFragment piechartfrag = new PieChartFragment();
-        final FragmentTransaction trans = getSupportFragmentManager().beginTransaction();
 
-        trans.add(R.id.pieChartFragmentContainer,piechartfrag,TAG);
 
 
         btnFood.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!trans.isEmpty()) trans.remove(piechartfrag);
-                trans.commit();
                 Intent i = new Intent(Category.this,MyPieChart.class);
                 startActivity(i);
             }
@@ -66,31 +61,21 @@ public class Category extends AppCompatActivity {
         btnTravel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!trans.isEmpty()) trans.remove(piechartfrag);
-                trans.commit();
             }
         });
 
         btnCar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                if (!trans.isEmpty()) trans.remove(piechartfrag);
-//                trans.commit();
             }
         });
 
         btnMisc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                if (!trans.isEmpty()) trans.remove(piechartfrag);
-//                trans.commit();
             }
         });
 
-
-    }
-
-    public void initPieChart() {
 
     }
 
