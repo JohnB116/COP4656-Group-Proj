@@ -37,9 +37,6 @@ public class Category extends AppCompatActivity {
         Button btnCar = (Button) findViewById(R.id.categoryCar);
         Button btnMisc = (Button) findViewById(R.id.categoryMisc);
 
-
-
-
         btnFood.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -51,8 +48,6 @@ public class Category extends AppCompatActivity {
         btnEntertainment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                if (!trans.isEmpty()) trans.remove(piechartfrag);
-//                trans.commit();
                 Intent i = new Intent(Category.this, MyPieChart.class);
                 startActivity(i);
             }
