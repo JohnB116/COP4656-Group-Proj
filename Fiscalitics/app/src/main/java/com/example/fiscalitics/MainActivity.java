@@ -251,6 +251,10 @@ public class MainActivity extends AppCompatActivity implements MyListFragment.My
                     Intent i = new Intent(MainActivity.this, Summary.class);
                     startActivity(i);
                 }
+                else if (x2 > x1) {
+                    Intent i = new Intent(MainActivity.this,Category.class);
+                    startActivity(i);
+                }
                 break;
         }
         return false;

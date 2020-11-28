@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_marginTop="25dp"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/textViewHeader"
+            android:textSize="32sp"
+            android:text="Spending Habits"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+
+        <Button
+            android:id="@+id/categoryFood"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/textViewHeader"
+            android:text="Food"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:id="@+id/categoryEntertainment"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/categoryFood"
+            android:text="Entertainment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:id="@+id/categoryTravel"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/categoryEntertainment"
+            android:text="Travel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:id="@+id/categoryCar"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/categoryTravel"
+            android:text="Gas / Automotive"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:id="@+id/categoryMisc"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/categoryCar"
+            android:text="Miscellaneous"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
