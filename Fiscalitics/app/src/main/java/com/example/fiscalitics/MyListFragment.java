@@ -77,12 +77,17 @@ public class MyListFragment extends Fragment {
                 //Launch dialog to enter Transaction information
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                 builder.setTitle("About this transaction");
-                builder.setMessage("Currently trying to get the information in this box \n , John");
 
-                TransactionDbHelper db = new TransactionDbHelper(getContext());
+                TransactionDbHelper db = new TransactionDbHelper(getActivity());
                 SQLiteDatabase s = db.getReadableDatabase();
 
-                //
+                //Read info from database and show it to the user upon request
+                String selectQuery = "SELECT  * FROM " + "transactionList" + " WHERE "
+                        + " _ID " + " = " + (i + 1);
+
+                Cursor cursor = s.rawQuery(selectQuery, null);
+                cursor.moveToFirst();
+                builder.setMessage("Expenditure amount: " + cursor.getString(cursor.getColumnIndex(TransactionMain.TransactionEntry.COLUMN_VALUE)));
 
                 AlertDialog a = builder.create();
                 a.show();
