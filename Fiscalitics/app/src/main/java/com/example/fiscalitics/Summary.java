@@ -31,7 +31,6 @@ public class Summary extends AppCompatActivity {
 
         total.setText(disp);
         avg.setText(disp2);
-
     }
 
     //Launch a main activity when the user swipes left
