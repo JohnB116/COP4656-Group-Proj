@@ -82,12 +82,15 @@ public class MyListFragment extends Fragment {
                 SQLiteDatabase s = db.getReadableDatabase();
 
                 //Read info from database and show it to the user upon request
-                String selectQuery = "SELECT  * FROM " + "transactionList" + " WHERE "
-                        + " _ID " + " = " + (i + 1);
+                String selectQuery = "SELECT * FROM transactionList WHERE _ID = " + (i + 1);
 
                 Cursor cursor = s.rawQuery(selectQuery, null);
                 cursor.moveToFirst();
-                builder.setMessage("Expenditure amount: " + cursor.getString(cursor.getColumnIndex(TransactionMain.TransactionEntry.COLUMN_VALUE)));
+                builder.setMessage("Expenditure amount: " + cursor.getString(cursor.getColumnIndex(TransactionMain.TransactionEntry.COLUMN_VALUE))
+                + "\n\n" + "Type: " + cursor.getString(cursor.getColumnIndex(TransactionMain.TransactionEntry.COLUMN_TYPE))
+                + "\n\n" + "Date + Time: " + cursor.getString(cursor.getColumnIndex(TransactionMain.TransactionEntry.COLUMN_DAY))
+                + " " + cursor.getString(cursor.getColumnIndex(TransactionMain.TransactionEntry.COLUMN_DATE))
+                + " " + cursor.getString(cursor.getColumnIndex(TransactionMain.TransactionEntry.COLUMN_TIME)));
 
                 AlertDialog a = builder.create();
                 a.show();
