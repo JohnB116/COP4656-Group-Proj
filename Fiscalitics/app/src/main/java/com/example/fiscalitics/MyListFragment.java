@@ -89,7 +89,7 @@ public class MyListFragment extends Fragment {
                 cursor.moveToFirst();
                 builder.setMessage("Expenditure amount: " + cursor.getString(cursor.getColumnIndex(TransactionMain.TransactionEntry.COLUMN_VALUE))
                 + "\n\n" + "Type: " + cursor.getString(cursor.getColumnIndex(TransactionMain.TransactionEntry.COLUMN_TYPE))
-                + "\n\n" + "Date + Time: " + cursor.getString(cursor.getColumnIndex(TransactionMain.TransactionEntry.COLUMN_DAY))
+                + "\n\n" + "Date/Time: " + cursor.getString(cursor.getColumnIndex(TransactionMain.TransactionEntry.COLUMN_DAY))
                 + " " + cursor.getString(cursor.getColumnIndex(TransactionMain.TransactionEntry.COLUMN_DATE))
                 + " " + cursor.getString(cursor.getColumnIndex(TransactionMain.TransactionEntry.COLUMN_TIME)));
 
