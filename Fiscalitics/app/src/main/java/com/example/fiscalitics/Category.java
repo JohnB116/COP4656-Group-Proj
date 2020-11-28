@@ -2,6 +2,7 @@ package com.example.fiscalitics;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -26,7 +27,6 @@ public class Category extends AppCompatActivity {
     PieData pieData;
     List<PieEntry> pieEntryList = new ArrayList<>();
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,15 +45,16 @@ public class Category extends AppCompatActivity {
         final FragmentTransaction trans = getSupportFragmentManager().beginTransaction();
 
         pieChart = findViewById(R.id.pieChart);
-        //pieChart.setUsePercentValues(true);
-        pieEntryList.add(new PieEntry(10,"India"));
-        pieEntryList.add(new PieEntry(5,"US"));
-        pieEntryList.add(new PieEntry(7,"UK"));
-        pieEntryList.add(new PieEntry(3,"NZ"));
-        PieDataSet pieDataSet = new PieDataSet(pieEntryList,"country");
-        pieData = new PieData(pieDataSet);
-        pieChart.setData(pieData);
-        pieChart.invalidate();
+       // if (pieChart == null) Log.v("nigga","BROKEN");
+//        pieChart.setUsePercentValues(true);
+//        pieEntryList.add(new PieEntry(10,"India"));
+//        pieEntryList.add(new PieEntry(5,"US"));
+//        pieEntryList.add(new PieEntry(7,"UK"));
+//        pieEntryList.add(new PieEntry(3,"NZ"));
+//        PieDataSet pieDataSet = new PieDataSet(pieEntryList,"country");
+//        pieData = new PieData(pieDataSet);
+//        pieChart.setData(pieData);
+//        pieChart.invalidate();
 
         trans.add(R.id.pieChartFragmentContainer,piechartfrag,TAG);
 
