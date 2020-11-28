@@ -34,6 +34,7 @@ public class Category extends AppCompatActivity {
         Button btnCar = (Button) findViewById(R.id.categoryCar);
         Button btnMisc = (Button) findViewById(R.id.categoryMisc);
 
+
         PieChart pieChart = new PieChart(this);
 
         ArrayList NoOfEmp = new ArrayList();
@@ -67,6 +68,7 @@ public class Category extends AppCompatActivity {
         pieChart.setData(data);
         dataSet.setColors(ColorTemplate.COLORFUL_COLORS);
         pieChart.animateXY(5000, 5000);
+
 
         btnFood.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,6 +120,7 @@ public class Category extends AppCompatActivity {
                 if(x2 < x1){
                     //Launch new page
                     Intent i = new Intent(Category.this, MainActivity.class);
+                    i.putExtra("direction", "l");
                     startActivity(i);
                     finish();
                 }
