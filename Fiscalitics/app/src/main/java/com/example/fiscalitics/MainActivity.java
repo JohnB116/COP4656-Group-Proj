@@ -54,7 +54,17 @@ public class MainActivity extends AppCompatActivity implements MyListFragment.My
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        overridePendingTransition(R.anim.enterl, R.anim.exitl);
+
+        String direction = getIntent().getStringExtra("direction");
+
+        if(direction != null) {
+            if (direction.equals("l")) {
+                overridePendingTransition(R.anim.enter, R.anim.exit);
+            }
+            else{
+                overridePendingTransition(R.anim.enterl, R.anim.exitl);
+            }
+        }
 
         //this edit text is used for entering the amount of $$CASHMONEY$$ you spent *$wag*
         final EditText etView = new EditText(this);

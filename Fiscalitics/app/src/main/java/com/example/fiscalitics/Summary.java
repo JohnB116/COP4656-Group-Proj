@@ -47,6 +47,7 @@ public class Summary extends AppCompatActivity {
                 if(x1 < x2){
                     //Launch new page
                     Intent i = new Intent(Summary.this, MainActivity.class);
+                    i.putExtra("direction", "r");
                     startActivity(i);
                     finish();
                 }
