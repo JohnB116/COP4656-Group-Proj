@@ -3,11 +3,20 @@ package com.example.fiscalitics;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
+import android.widget.CalendarView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.Calendar;
 
 public class Summary extends AppCompatActivity {
 
@@ -24,13 +33,65 @@ public class Summary extends AppCompatActivity {
         overridePendingTransition(R.anim.enter, R.anim.exit);
 
         TextView total = (TextView) findViewById(R.id.total);
-        String disp = "Total Spending: $" + String.format("%.2f", sp.getFloat("total", 0.0f));
+        String disp = "Total Amount Spent: $" + String.format("%.2f", sp.getFloat("total", 0.0f));
 
         TextView avg = (TextView) findViewById(R.id.avg);
         String disp2 = "Average Transaction Value: $" + String.format("%.2f", sp.getFloat("average", 0.0f));
 
         total.setText(disp);
         avg.setText(disp2);
+
+
+        CalendarView c = (CalendarView) findViewById(R.id.calendarView);
+
+        c.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+
+            public void onSelectedDayChange(CalendarView view, int year, int month,
+                                            int date) {
+                String theDate = "'"+(String.valueOf(month+1) + "/" + String.valueOf(date) +
+                        "/" + String.valueOf(year)).trim() + "'";
+
+                Log.v("Log", theDate);
+
+                TransactionDbHelper db = new TransactionDbHelper(getApplicationContext());
+                SQLiteDatabase s = db.getReadableDatabase();
+
+                String Query = "SELECT * FROM transactionList";
+                Cursor cur = s.rawQuery(Query, null);
+                cur.moveToFirst();
+
+                Log.v("Log", cur.getString(cur.getColumnIndex(TransactionMain.TransactionEntry.COLUMN_DATE)));
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(Summary.this);
+                builder.setTitle("Transactions from " + theDate);
+
+                //Read info from database and show it to the user upon request
+                String selectQuery = "SELECT * FROM transactionList WHERE Date = "  + theDate;
+
+                //Put together data from the entry to show
+                Cursor cursor = s.rawQuery(selectQuery, null);
+                cursor.moveToFirst();
+                StringBuilder list = new StringBuilder();
+
+                if(cursor.getCount() > 0) {
+                    for (int i = 0; i < cursor.getCount(); i++) {
+                        list.append(cursor.getString(cursor.getColumnIndex(TransactionMain.TransactionEntry.COLUMN_TIME))
+                        + ": " + cursor.getString(cursor.getColumnIndex(TransactionMain.TransactionEntry.COLUMN_VALUE))
+                        + " " + cursor.getString(cursor.getColumnIndex(TransactionMain.TransactionEntry.COLUMN_TYPE))).append("\n");
+                        cursor.moveToNext();
+                    }
+                    builder.setMessage(list.toString());
+                }
+                else{
+                    builder.setMessage("No activity to report");
+                }
+
+                AlertDialog a = builder.create();
+                a.show();
+            }
+        });
+
+
     }
 
     //Launch a main activity when the user swipes left
