@@ -12,7 +12,8 @@
             android:layout_centerHorizontal="true"
             android:id="@+id/textViewHeader"
             android:textSize="32sp"
-            android:text="Spending Habits"
+            android:text="Your Spending Habits"
+            android:textColor="@color/design_default_color_background"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 

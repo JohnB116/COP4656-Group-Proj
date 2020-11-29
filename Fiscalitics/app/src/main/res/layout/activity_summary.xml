@@ -15,7 +15,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Summary"
-            android:textColor="#000000"
+            android:textColor="@color/design_default_color_background"
             android:textSize="45sp"
             android:layout_centerHorizontal="true"
             android:fontFamily="serif-monospace"/>
@@ -27,7 +27,7 @@
             android:layout_below="@+id/title"
             android:paddingTop="15dp"
             android:text="Your total spending: $"
-            android:textColor="#000000"
+            android:textColor="@color/design_default_color_background"
             android:textSize="20sp"
             tools:layout_editor_absoluteX="170dp"
             tools:layout_editor_absoluteY="228dp" />
@@ -38,7 +38,7 @@
             android:layout_below="@+id/total"
             android:paddingTop="15dp"
             android:text="Your average daily spending: $"
-            android:textColor="#000000"
+            android:textColor="@color/design_default_color_background"
             android:textSize="20sp"
             tools:layout_editor_absoluteX="170dp"
             tools:layout_editor_absoluteY="228dp" />
@@ -49,7 +49,14 @@
             android:layout_margin="50dp"
             android:gravity="center"
             android:text="STOP SPENDING MONEY YOURE ALREADY BROKE"
+            android:textColor="@color/design_default_color_background"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+
+        <CalendarView
+            android:id="@+id/calendarView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/message"/>
     </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
