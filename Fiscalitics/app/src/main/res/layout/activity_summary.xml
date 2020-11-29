@@ -14,11 +14,11 @@
             android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Summary"
-            android:textColor="@color/design_default_color_background"
-            android:textSize="45sp"
             android:layout_centerHorizontal="true"
-            android:fontFamily="serif-monospace"/>
+            android:fontFamily="serif-monospace"
+            android:text="Summary"
+            android:textColor="@color/design_default_color_on_secondary"
+            android:textSize="45sp" />
 
         <TextView
             android:id="@+id/total"
@@ -27,10 +27,11 @@
             android:layout_below="@+id/title"
             android:paddingTop="15dp"
             android:text="Your total spending: $"
-            android:textColor="@color/design_default_color_background"
+            android:textColor="@color/design_default_color_on_secondary"
             android:textSize="20sp"
             tools:layout_editor_absoluteX="170dp"
             tools:layout_editor_absoluteY="228dp" />
+
         <TextView
             android:id="@+id/avg"
             android:layout_width="wrap_content"
@@ -38,20 +39,25 @@
             android:layout_below="@+id/total"
             android:paddingTop="15dp"
             android:text="Your average daily spending: $"
-            android:textColor="@color/design_default_color_background"
+            android:textColor="@color/design_default_color_on_secondary"
             android:textSize="20sp"
             tools:layout_editor_absoluteX="170dp"
             tools:layout_editor_absoluteY="228dp" />
 
         <TextView
             android:id="@+id/message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/total"
-            android:layout_margin="50dp"
+            android:layout_marginStart="50dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginEnd="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginBottom="50dp"
             android:gravity="center"
             android:text="STOP SPENDING MONEY YOURE ALREADY BROKE"
-            android:textColor="@color/design_default_color_background"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:textColor="@color/design_default_color_error" />
 
         <CalendarView
             android:id="@+id/calendarView"
