@@ -8,14 +8,14 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:layout_marginTop="25dp"
-            android:layout_centerHorizontal="true"
             android:id="@+id/textViewHeader"
-            android:textSize="32sp"
-            android:text="Your Spending Habits"
-            android:textColor="@color/design_default_color_background"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="25dp"
+            android:text="Your Spending Habits"
+            android:textColor="@color/design_default_color_on_secondary"
+            android:textSize="32sp" />
 
 
         <Button
