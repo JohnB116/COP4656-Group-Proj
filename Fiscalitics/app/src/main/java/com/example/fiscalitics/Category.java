@@ -7,6 +7,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 public class Category extends AppCompatActivity {
 
@@ -29,22 +31,23 @@ public class Category extends AppCompatActivity {
         Button btnEdu = (Button) findViewById(R.id.categoryEdu);
         Button btnMisc = (Button) findViewById(R.id.categoryMisc);
 
+        BarChartFragment barChartFragment = new BarChartFragment();
+        FragmentTransaction trans = getSupportFragmentManager().beginTransaction();
+        trans.add(R.id.barChartFragmentContainer,barChartFragment,TAG);
+        trans.commit();
 
         btnFood.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(), MyPieChart.class);
-                startActivity(i);
-                finish();
+//                Intent i = new Intent(getApplicationContext(), MyPieChart.class);
+//                startActivity(i);
+//                finish();
             }
         });
 
         btnEntertainment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(Category.this, MyPieChart.class);
-                startActivity(i);
-                finish();
             }
         });
 
