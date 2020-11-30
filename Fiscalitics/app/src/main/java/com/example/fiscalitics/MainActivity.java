@@ -308,4 +308,9 @@ public class MainActivity extends AppCompatActivity implements MyListFragment.My
         if (sp.edit().clear().commit()) return 0;
         else return -1;
     }
+
+    public void onClickShowPieChart(View view) {
+        startActivity(new Intent(this,PieChart.class));
+    }
 }
+
