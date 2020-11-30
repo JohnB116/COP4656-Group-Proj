@@ -9,14 +9,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".PieChart"
+            android:label="Pie Chart"
+            ></activity>
         <!-- The Transaction ContentProvider -->
         <provider
             android:name=".TransactionProvider"
             android:authorities="com.example.fiscalitics"
             android:exported="false" />
-        <activity android:name=".Summary"></activity>
-        <activity android:name=".Category"></activity>
 
+        <activity android:name=".Summary" />
+        <activity android:name=".Category" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
