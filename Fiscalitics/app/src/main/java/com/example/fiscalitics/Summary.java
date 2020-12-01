@@ -32,35 +32,25 @@ public class Summary extends AppCompatActivity {
         //Animate lateral slide-in
         overridePendingTransition(R.anim.enter, R.anim.exit);
 
+        //Retrieve statistics from SharedPreferences
         TextView total = (TextView) findViewById(R.id.total);
         String disp = "Total Amount Spent: $" + String.format("%.2f", sp.getFloat("total", 0.0f));
-
         TextView avg = (TextView) findViewById(R.id.avg);
         String disp2 = "Average Transaction Value: $" + String.format("%.2f", sp.getFloat("average", 0.0f));
-
         total.setText(disp);
         avg.setText(disp2);
 
-
+        //Set up calendar that displays activity on chosen date
         CalendarView c = (CalendarView) findViewById(R.id.calendarView);
-
         c.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
 
             public void onSelectedDayChange(CalendarView view, int year, int month,
                                             int date) {
+
                 String theDate = "'"+(String.valueOf(month+1) + "/" + String.valueOf(date) +
                         "/" + String.valueOf(year)).trim() + "'";
-
-                Log.v("Log", theDate);
-
                 TransactionDbHelper db = new TransactionDbHelper(getApplicationContext());
                 SQLiteDatabase s = db.getReadableDatabase();
-
-                String Query = "SELECT * FROM transactionList";
-                Cursor cur = s.rawQuery(Query, null);
-                cur.moveToFirst();
-
-                Log.v("Log", cur.getString(cur.getColumnIndex(TransactionMain.TransactionEntry.COLUMN_DATE)));
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(Summary.this);
                 builder.setTitle("Transactions from " + theDate);
@@ -73,6 +63,7 @@ public class Summary extends AppCompatActivity {
                 cursor.moveToFirst();
                 StringBuilder list = new StringBuilder();
 
+                //Concatenate all transactions found for the selected date
                 if(cursor.getCount() > 0) {
                     for (int i = 0; i < cursor.getCount(); i++) {
                         list.append(cursor.getString(cursor.getColumnIndex(TransactionMain.TransactionEntry.COLUMN_TIME))
@@ -82,8 +73,9 @@ public class Summary extends AppCompatActivity {
                     }
                     builder.setMessage(list.toString());
                 }
+                //No transactions found
                 else{
-                    builder.setMessage("No activity to report");
+                    builder.setMessage("No activity logged on this date");
                 }
 
                 AlertDialog a = builder.create();
@@ -94,7 +86,7 @@ public class Summary extends AppCompatActivity {
 
     }
 
-    //Launch a main activity when the user swipes left
+    //Launch main activity when the user swipes left
     public boolean onTouchEvent(MotionEvent touchEvent){
         //Get swipe data
         switch(touchEvent.getAction()){

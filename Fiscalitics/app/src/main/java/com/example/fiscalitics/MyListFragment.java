@@ -79,15 +79,13 @@ public class MyListFragment extends Fragment {
                 builder.setTitle("About this transaction");
 
                 TransactionDbHelper db = new TransactionDbHelper(getActivity());
-                SQLiteDatabase s = db.getReadableDatabase();
-
-                //Read info from database and show it to the user upon request
+                SQLiteDatabase s = db.getReadableDatabase(); //Read info from database and show it to the user upon request
                 String selectQuery = "SELECT * FROM transactionList WHERE _ID = " + (i + 1);
 
                 //Put together data from the entry to show
                 Cursor cursor = s.rawQuery(selectQuery, null);
                 cursor.moveToFirst();
-                builder.setMessage("Expenditure amount: " + cursor.getString(cursor.getColumnIndex(TransactionMain.TransactionEntry.COLUMN_VALUE))
+                builder.setMessage("Money Spent: " + cursor.getString(cursor.getColumnIndex(TransactionMain.TransactionEntry.COLUMN_VALUE))
                 + "\n\n" + "Type: " + cursor.getString(cursor.getColumnIndex(TransactionMain.TransactionEntry.COLUMN_TYPE))
                 + "\n\n" + "Date/Time: " + cursor.getString(cursor.getColumnIndex(TransactionMain.TransactionEntry.COLUMN_DAY))
                 + " " + cursor.getString(cursor.getColumnIndex(TransactionMain.TransactionEntry.COLUMN_DATE))

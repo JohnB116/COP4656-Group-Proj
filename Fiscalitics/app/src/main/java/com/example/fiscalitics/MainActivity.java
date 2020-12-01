@@ -52,11 +52,12 @@ public class MainActivity extends AppCompatActivity implements MyListFragment.My
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //Set animation direction based on touch event input
         String direction = getIntent().getStringExtra("direction");
-
         if(direction != null) {
             if (direction.equals("l")) {
                 overridePendingTransition(R.anim.enter, R.anim.exit);
@@ -81,6 +82,7 @@ public class MainActivity extends AppCompatActivity implements MyListFragment.My
         btnGas.setText("Gas/Automotive");
         btnEdu.setText("School or Study supplies");
 
+        //More EPIC resources
         final SharedPreferences sp = getSharedPreferences("TLog", Activity.MODE_PRIVATE);
         final SharedPreferences.Editor editor = sp.edit();
         final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -209,6 +211,7 @@ public class MainActivity extends AppCompatActivity implements MyListFragment.My
                         builder2.setPositiveButton("ADD", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
+                                    //Add type to the row in the SQLite Database based on input
                                     if(btnFood.isChecked()){
                                         values.put(TransactionMain.TransactionEntry.COLUMN_TYPE, "Grocery/Food");
                                     }
@@ -242,11 +245,13 @@ public class MainActivity extends AppCompatActivity implements MyListFragment.My
                                     }
                             }
                         });
+                        //Type of transaction dialog
                         AlertDialog b = builder2.create();
                         b.show();
 
                     }
                 });
+                //Amount input dialog
                 AlertDialog a = builder.create();
                 a.show();
 
@@ -255,7 +260,7 @@ public class MainActivity extends AppCompatActivity implements MyListFragment.My
 
     }
 
-    //Launch the Summary activity when the user swipes right
+    //Launch the Summary activity when the user swipes right or left
     public boolean onTouchEvent(MotionEvent touchEvent) {
         //Get swipe data
         switch(touchEvent.getAction()){
@@ -282,8 +287,7 @@ public class MainActivity extends AppCompatActivity implements MyListFragment.My
 
     //need to implement this listener function to receive the item otherwise the app breaks. bummer, i know.
     @Override
-    public void onListItemSelected(String input) {
-    }
+    public void onListItemSelected(String input) {}
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
