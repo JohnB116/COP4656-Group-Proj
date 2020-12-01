@@ -47,7 +47,21 @@ public class Summary extends AppCompatActivity {
             public void onSelectedDayChange(CalendarView view, int year, int month,
                                             int date) {
 
-                String theDate = "'"+(String.valueOf(month+1) + "/" + String.valueOf(date) +
+                String the_month = null, the_day = null;
+
+                if(month+1 < 10){
+                    the_month = "0" + String.valueOf(month+1);
+                }
+                else{
+                    the_month = String.valueOf(month+1);
+                }
+                if(date < 10){
+                    the_day = "0" + String.valueOf(date);
+                }
+                else{
+                    the_day = String.valueOf(date);
+                }
+                String theDate = "'"+(the_month + "/" + the_day +
                         "/" + String.valueOf(year)).trim() + "'";
                 TransactionDbHelper db = new TransactionDbHelper(getApplicationContext());
                 SQLiteDatabase s = db.getReadableDatabase();
