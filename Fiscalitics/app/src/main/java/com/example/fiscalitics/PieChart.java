@@ -56,7 +56,7 @@ public class PieChart extends AppCompatActivity {
         pieDataSet.setValueFormatter(new ValueFormatter() {
             @Override
             public String getFormattedValue(float value) {
-                return value+" $ ";
+                return String.format("%.02f", value) +" $ ";
             }
         });
     }
