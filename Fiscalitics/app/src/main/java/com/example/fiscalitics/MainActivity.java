@@ -318,5 +318,13 @@ public class MainActivity extends AppCompatActivity implements MyListFragment.My
     public void onClickShowPieChart(View view) {
         startActivity(new Intent(this,PieChart.class));
     }
+    
+    //#Adds the calendar
+    public void onClickShowDateActivity(View view) {
+        {
+            startActivity(new Intent(this, MoneyInDateRange.class));
+        }
+    }
+    
 }
 
