@@ -51,28 +51,6 @@ public class BarChartFragment extends Fragment {
         HashMap<String,Float> hashMap = (HashMap<String, Float>) getArguments().getSerializable("hashmap");
         ArrayList barEntries = (ArrayList) getArguments().getSerializable("arraylist");
 
-        barDataSet = new BarDataSet(barEntries, "goop");
-        barData = new BarData(barDataSet);
-        chart.setData(barData);
-        barDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
-
-        Log.v("ree","heyo");
-
-        barDataSet.setValueTextColor(Color.BLACK);
-        barDataSet.setValueTextSize(10f);
-
-        Log.v("ree","yo");
-
-        barDataSet.setValueFormatter(new ValueFormatter() {
-            @Override
-            public String getFormattedValue(float value) {
-                return String.format("%.02f", value) +" $ ";
-            }
-        });
-
-        Log.v("ree","yuh");
-
-
 //        List<BarEntry> entries = new ArrayList<>();
 //        entries.add(new BarEntry(0f, 10f));
 //        entries.add(new BarEntry(1f, 20f));

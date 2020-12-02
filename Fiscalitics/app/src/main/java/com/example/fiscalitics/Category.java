@@ -23,10 +23,6 @@ public class Category extends AppCompatActivity {
 
     private static final String TAG = Category.class.getCanonicalName();
 
-    HashMap<String,Float> hashMap=new HashMap<>();
-
-    ArrayList barEntries;
-
     float x1, x2, y1, y2;
 
     @Override
@@ -44,12 +40,7 @@ public class Category extends AppCompatActivity {
         Button btnEdu = (Button) findViewById(R.id.categoryEdu);
         Button btnMisc = (Button) findViewById(R.id.categoryMisc);
 
-        loadData();
-        getEntries();
-
         Bundle bundle = new Bundle();
-        bundle.putSerializable("hashmap",hashMap);
-        bundle.putSerializable("barEntries",barEntries);
 
         BarChartFragment barChartFragment = new BarChartFragment();
         barChartFragment.setArguments(bundle);
@@ -57,75 +48,6 @@ public class Category extends AppCompatActivity {
         FragmentTransaction trans = getSupportFragmentManager().beginTransaction();
         trans.add(R.id.barChartFragmentContainer,barChartFragment,TAG);
         trans.commit();
-
-        btnFood.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-            }
-        });
-
-        btnEntertainment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-            }
-        });
-
-        btnTravel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-            }
-        });
-
-        btnCar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-            }
-        });
-
-        btnEdu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-            }
-        });
-
-        btnMisc.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-            }
-        });
-
-
-    }
-
-    private void loadData() {
-        Cursor cursor = getContentResolver().query(TransactionMain.TransactionEntry.CONTENT_URI, null, null, null, null);
-        if(cursor != null && cursor.getCount() > 0){
-            cursor.moveToFirst();
-            do {
-                String TYPE=cursor.getString(2);
-                String Value=cursor.getString(1);
-                Value= Value.replace("$","");
-                if(hashMap.get(TYPE)==null) {
-                    Float value = Float.parseFloat(Value.trim());
-                    hashMap.put(TYPE,value);
-                }
-                else {
-                    Float val=hashMap.get(TYPE);
-                    Float value = Float.parseFloat(Value.trim());
-                    val=value+val;
-                    hashMap.put(TYPE,val);
-
-                }
-            }
-            while (cursor.moveToNext());
-        }
-    }
-
-    private void getEntries() {
-        barEntries = new ArrayList<>();
-        for(String key:hashMap.keySet()) {
-            barEntries.add(new PieEntry(hashMap.get(key), key));
-        }
     }
 
     //Launch a main activity when the user swipes right
