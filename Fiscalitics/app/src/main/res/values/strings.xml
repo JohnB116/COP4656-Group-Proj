@@ -3,4 +3,9 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="menu_exit_option">Exit</string>
+    <string name = "social">Social/Drinks/Entertainment</string>
+    <string name = "food">Grocery/Food</string>
+    <string name = "home">Home/Living/Rent</string>
+    <string name = "gas">Gas/Automotive</string>
+    <string name = "edu">School or Study Supplies</string>
 </resources>

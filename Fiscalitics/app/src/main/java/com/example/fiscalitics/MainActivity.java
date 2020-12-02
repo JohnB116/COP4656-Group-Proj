@@ -78,11 +78,11 @@ public class MainActivity extends AppCompatActivity implements MyListFragment.My
         final RadioButton btnHome = new RadioButton(this);
         final RadioButton btnGas = new RadioButton(this);
         final RadioButton btnEdu = new RadioButton(this);
-        btnEntertainment.setText("Social/Drinks/Entertainment");
-        btnFood.setText("Grocery/Food");
-        btnHome.setText("Home/Living/Rent");
-        btnGas.setText("Gas/Automotive");
-        btnEdu.setText("School or Study supplies");
+        btnEntertainment.setText(R.string.social);
+        btnFood.setText(R.string.food);
+        btnHome.setText(R.string.home);
+        btnGas.setText(R.string.gas);
+        btnEdu.setText(R.string.edu);
 
         //More EPIC resources
         final SharedPreferences sp = getSharedPreferences("TLog", Activity.MODE_PRIVATE);
