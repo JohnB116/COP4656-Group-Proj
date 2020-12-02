@@ -1,6 +1,7 @@
 package com.example.fiscalitics;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -10,9 +11,21 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.PieEntry;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
 public class Category extends AppCompatActivity {
 
     private static final String TAG = Category.class.getCanonicalName();
+
+    HashMap<String,Float> hashMap=new HashMap<>();
+
+    ArrayList barEntries;
 
     float x1, x2, y1, y2;
 
@@ -31,7 +44,16 @@ public class Category extends AppCompatActivity {
         Button btnEdu = (Button) findViewById(R.id.categoryEdu);
         Button btnMisc = (Button) findViewById(R.id.categoryMisc);
 
+        loadData();
+        getEntries();
+
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("hashmap",hashMap);
+        bundle.putSerializable("barEntries",barEntries);
+
         BarChartFragment barChartFragment = new BarChartFragment();
+        barChartFragment.setArguments(bundle);
+
         FragmentTransaction trans = getSupportFragmentManager().beginTransaction();
         trans.add(R.id.barChartFragmentContainer,barChartFragment,TAG);
         trans.commit();
@@ -39,9 +61,6 @@ public class Category extends AppCompatActivity {
         btnFood.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent i = new Intent(getApplicationContext(), MyPieChart.class);
-//                startActivity(i);
-//                finish();
             }
         });
 
@@ -76,6 +95,37 @@ public class Category extends AppCompatActivity {
         });
 
 
+    }
+
+    private void loadData() {
+        Cursor cursor = getContentResolver().query(TransactionMain.TransactionEntry.CONTENT_URI, null, null, null, null);
+        if(cursor != null && cursor.getCount() > 0){
+            cursor.moveToFirst();
+            do {
+                String TYPE=cursor.getString(2);
+                String Value=cursor.getString(1);
+                Value= Value.replace("$","");
+                if(hashMap.get(TYPE)==null) {
+                    Float value = Float.parseFloat(Value.trim());
+                    hashMap.put(TYPE,value);
+                }
+                else {
+                    Float val=hashMap.get(TYPE);
+                    Float value = Float.parseFloat(Value.trim());
+                    val=value+val;
+                    hashMap.put(TYPE,val);
+
+                }
+            }
+            while (cursor.moveToNext());
+        }
+    }
+
+    private void getEntries() {
+        barEntries = new ArrayList<>();
+        for(String key:hashMap.keySet()) {
+            barEntries.add(new PieEntry(hashMap.get(key), key));
+        }
     }
 
     //Launch a main activity when the user swipes right

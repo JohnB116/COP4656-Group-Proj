@@ -1,5 +1,7 @@
 package com.example.fiscalitics;
 
+import android.database.Cursor;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -13,13 +15,21 @@ import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.formatter.ValueFormatter;
+import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class BarChartFragment extends Fragment {
 
-    private BarChart chart;
+    BarChart chart;
+    BarData barData;
+    BarDataSet barDataSet;
 
     public BarChartFragment() {
         // Required empty public constructor
@@ -37,22 +47,49 @@ public class BarChartFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_bar_chart, container, false);
 
         chart = view.findViewById(R.id.barChart);
-        List<BarEntry> entries = new ArrayList<>();
-        entries.add(new BarEntry(0f, 10f)); 
-        entries.add(new BarEntry(1f, 20f));
-        entries.add(new BarEntry(2f, 30f));
-        entries.add(new BarEntry(3f, 40f));
-        entries.add(new BarEntry(4f, 50f));
-        entries.add(new BarEntry(5f, 60f));
 
-        BarDataSet set = new BarDataSet(entries, "Expenditure");
+        HashMap<String,Float> hashMap = (HashMap<String, Float>) getArguments().getSerializable("hashmap");
+        ArrayList barEntries = (ArrayList) getArguments().getSerializable("arraylist");
 
-        BarData data = new BarData(set);
-        data.setBarWidth(0.9f); // set custom bar width
-        chart.setData(data);
-        chart.setFitBars(true); // make the x-axis fit exactly all bars
-        chart.invalidate(); // refresh
+        barDataSet = new BarDataSet(barEntries, "goop");
+        barData = new BarData(barDataSet);
+        chart.setData(barData);
+        barDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
+
+        Log.v("ree","heyo");
+
+        barDataSet.setValueTextColor(Color.BLACK);
+        barDataSet.setValueTextSize(10f);
+
+        Log.v("ree","yo");
+
+        barDataSet.setValueFormatter(new ValueFormatter() {
+            @Override
+            public String getFormattedValue(float value) {
+                return String.format("%.02f", value) +" $ ";
+            }
+        });
+
+        Log.v("ree","yuh");
+
+
+//        List<BarEntry> entries = new ArrayList<>();
+//        entries.add(new BarEntry(0f, 10f));
+//        entries.add(new BarEntry(1f, 20f));
+//        entries.add(new BarEntry(2f, 30f));
+//        entries.add(new BarEntry(3f, 40f));
+//        entries.add(new BarEntry(4f, 50f));
+//        entries.add(new BarEntry(5f, 60f));
+//
+//        BarDataSet set = new BarDataSet(entries, "Expenditure");
+//
+//        BarData data = new BarData(set);
+//        data.setBarWidth(0.9f); // set custom bar width
+//        chart.setData(data);
+//        chart.setFitBars(true); // make the x-axis fit exactly all bars
+//        chart.invalidate(); // refresh
 
         return view;
     }
+
 }

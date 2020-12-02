@@ -97,7 +97,7 @@ public class MyListFragment extends Fragment {
                 builder.setNegativeButton("Delete", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        
+
                     }
                 });
 
