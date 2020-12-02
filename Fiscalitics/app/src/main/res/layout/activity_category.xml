@@ -58,17 +58,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
-        <Button
-            android:id="@+id/categoryMisc"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@+id/categoryEdu"
-            android:text="Miscellaneous"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
         <FrameLayout
             android:layout_margin="5dp"
-            android:layout_below="@+id/categoryMisc"
+            android:layout_below="@+id/categoryEdu"
             android:id="@+id/barChartFragmentContainer"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>

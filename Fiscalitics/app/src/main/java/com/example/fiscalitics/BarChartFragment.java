@@ -30,6 +30,8 @@ public class BarChartFragment extends Fragment {
     BarChart chart;
     BarData barData;
     BarDataSet barDataSet;
+    HashMap<String,Float> hashMap = new HashMap<>();
+    ArrayList barEntries;
 
     public BarChartFragment() {
         // Required empty public constructor
@@ -48,8 +50,24 @@ public class BarChartFragment extends Fragment {
 
         chart = view.findViewById(R.id.barChart);
 
-        HashMap<String,Float> hashMap = (HashMap<String, Float>) getArguments().getSerializable("hashmap");
-        ArrayList barEntries = (ArrayList) getArguments().getSerializable("arraylist");
+
+        hashMap = (HashMap<String, Float>) getArguments().getSerializable("hashmap");
+        barEntries = (ArrayList) getArguments().getSerializable("barentries");
+
+        barDataSet = new BarDataSet(barEntries, "gabagool");  //Ceating Pie DataSet
+        barData = new BarData(barDataSet); // Creating PieData Object With PieDataSetEntries
+        chart.setData(barData);
+        barDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
+
+        barDataSet.setValueTextColor(Color.BLACK);
+        barDataSet.setValueTextSize(10f);
+
+        barDataSet.setValueFormatter(new ValueFormatter() { //This is value formatter by default we will have values like 20 or 30 but we wants to show a Dollar sign with that values so we are using this
+            @Override
+            public String getFormattedValue(float value) {
+                return String.format("%.02f", value) +" $ ";
+            }
+        });
 
 //        List<BarEntry> entries = new ArrayList<>();
 //        entries.add(new BarEntry(0f, 10f));
@@ -69,5 +87,4 @@ public class BarChartFragment extends Fragment {
 
         return view;
     }
-
 }
