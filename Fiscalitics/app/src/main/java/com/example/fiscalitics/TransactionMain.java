@@ -16,8 +16,7 @@ public class TransactionMain {
         public static final String COLUMN_TIME = "Time";
         public static final String COLUMN_DAY = "Day";
         public static final String COLUMN_DATE = "Date";
-        public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon()
-                .appendPath(TABLE_NAME).build();
+        public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(TABLE_NAME).build();
 
         public static Uri buildTransactionUriWithId(long id){
             return CONTENT_URI.buildUpon().appendPath(Long.toString(id)).build();
