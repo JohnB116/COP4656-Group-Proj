@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MoneyInDateRange">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="60dp"
+        >
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Starting Date"
+            android:textSize="20dp"
+
+            android:fontFamily="sans-serif-smallcaps"
+            android:gravity="center"
+            android:textStyle="bold"
+
+            />
+        <EditText
+            android:id="@+id/edittxtDate"
+            android:layout_marginTop="5dp"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:padding="10dp"
+            android:focusable="false"
+            android:onClick="onClickStartDate"
+            android:layout_gravity="center_horizontal"
+            android:editable="false"
+            android:background="@drawable/rounded_edittext"
+            android:drawableRight="@drawable/ic_date" />
+
+
+
+
+       <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="End Date"
+           android:layout_marginTop="20dp"
+        android:textSize="20dp"
+        android:fontFamily="sans-serif-smallcaps"
+        android:gravity="center"
+        android:textStyle="bold"
+
+        />
+        <EditText
+            android:id="@+id/edittxtDateEnd"
+            android:layout_marginTop="5dp"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:padding="10dp"
+            android:onClick="onClickEndDate"
+            android:focusable="false"
+            android:layout_gravity="center_horizontal"
+            android:editable="false"
+            android:background="@drawable/rounded_edittext"
+            android:drawableRight="@drawable/ic_date_end" />
+
+
+
+        <Button
+            android:layout_marginTop="20dp"
+            android:layout_width="300dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_button"
+            android:text="Calculate"
+            android:onClick="onClickCalculate"
+            android:textColor="#fff"
+
+            />
+
+
+
+        <LinearLayout
+            android:id="@+id/lytResult"
+            android:layout_marginTop="30dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:orientation="vertical"
+            android:background="@drawable/square"
+            android:layout_gravity="center_horizontal"
+            >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="You Spent "
+                android:gravity="center"
+                android:fontFamily="sans-serif-smallcaps"
+                android:textStyle="bold"
+                android:textSize="20dp"
+
+                />
+            <LinearLayout
+                android:layout_marginTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                >
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/table_content_cell_bg_color"
+                    android:text="Avg. Money Spent / Day"
+                    android:lines="1"
+                    android:textSize="15dp"
+                    android:textColor="#ffff"
+                    android:gravity="center"
+                    />
+                <TextView
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/table_content_cell_bg_color"
+                    android:text="Days"
+                    android:layout_marginStart="5dp"
+                    android:gravity="center"
+                    android:layout_marginLeft="5dp"
+                    android:textColor="#ffff"
+                    />
+                <TextView
+                    android:layout_marginStart="5dp"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/table_content_cell_bg_color"
+                    android:text="Money Spent"
+                    android:textColor="#ffff"
+                    android:layout_gravity="end"
+                    android:gravity="center"
+                    android:layout_marginLeft="5dp" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+
+                >
+                <TextView
+                    android:id="@+id/txtAvg"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/table_content_cell_bg"
+                    android:text="0"
+                    android:lines="1"
+                    android:gravity="center"
+                    />
+                <TextView
+                    android:id="@+id/txtDays"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/table_content_cell_bg"
+                    android:text="0"
+                    android:layout_marginStart="5dp"
+                    android:gravity="center"
+                    android:layout_marginLeft="5dp" />
+                <TextView
+                    android:id="@+id/txtMoney"
+                    android:layout_marginStart="5dp"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/table_content_cell_bg"
+                    android:text="0"
+                    android:layout_gravity="end"
+                    android:gravity="center"
+                    android:layout_marginLeft="5dp" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+
+
+
+    </LinearLayout>
+
+
+
+    </LinearLayout>
