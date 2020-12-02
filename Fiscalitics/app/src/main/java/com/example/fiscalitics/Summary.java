@@ -1,5 +1,6 @@
 package com.example.fiscalitics;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
@@ -8,6 +9,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -15,6 +17,10 @@ import android.widget.CalendarView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -22,6 +28,7 @@ public class Summary extends AppCompatActivity {
 
     float x1, x2, y1, y2;
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -39,6 +46,42 @@ public class Summary extends AppCompatActivity {
         String disp2 = "Average Transaction Value: $" + String.format("%.2f", sp.getFloat("average", 0.0f));
         total.setText(disp);
         avg.setText(disp2);
+
+        //Monthly spending textview
+        TextView monthly = (TextView) findViewById(R.id.month);
+        float monthTotal = 0.0f;
+        TransactionDbHelper db = new TransactionDbHelper(this);
+        final SQLiteDatabase s = db.getReadableDatabase(); //Read info from database and show it to the user upon request
+        String selectQuery = "SELECT * FROM transactionList";
+        Cursor cursor = s.rawQuery(selectQuery, null);
+        cursor.moveToFirst();
+        DateTimeFormatter date = DateTimeFormatter.ofPattern("MM");
+        do {
+            if((cursor.getString(cursor.getColumnIndex(TransactionMain.TransactionEntry.COLUMN_DATE))
+                    .substring(0,2)).trim().equals(LocalDateTime.now().format(date))){
+                String val = cursor.getString(cursor.getColumnIndex(TransactionMain.TransactionEntry.COLUMN_VALUE));
+                String num = val.replace("$", "");
+                monthTotal += Float.parseFloat(num);
+            }
+        } while (cursor.moveToNext());
+        monthly.setText("This Month's Expenditure: " + String.format("$%.2f", monthTotal));
+
+
+        //Daily Spending textview
+        TextView daily = (TextView) findViewById(R.id.day);
+        float dayTotal = 0.0f;
+        cursor.moveToFirst();
+        date = DateTimeFormatter.ofPattern("dd");
+        do {
+            if((cursor.getString(cursor.getColumnIndex(TransactionMain.TransactionEntry.COLUMN_DATE))
+                    .substring(3,5)).trim().equals(LocalDateTime.now().format(date))){
+                String val = cursor.getString(cursor.getColumnIndex(TransactionMain.TransactionEntry.COLUMN_VALUE));
+                String num = val.replace("$", "");
+                dayTotal += Float.parseFloat(num);
+            }
+        } while (cursor.moveToNext());
+        daily.setText("Today's Expenditure: " + String.format("$%.2f", dayTotal));
+
 
         //Set up calendar that displays activity on chosen date
         CalendarView c = (CalendarView) findViewById(R.id.calendarView);
