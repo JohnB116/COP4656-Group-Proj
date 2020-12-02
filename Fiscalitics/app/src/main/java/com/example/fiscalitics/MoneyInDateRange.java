@@ -1,5 +1,6 @@
 package com.example.fiscalitics;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,6 +8,7 @@ import android.app.DatePickerDialog;
 import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -39,6 +41,11 @@ public class MoneyInDateRange extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_money_in_date_range);
+
+        //Add a back button and a new title
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setTitle("Expenditure in Date Range");
 
         txtDays=findViewById(R.id.txtDays);
         txtMoney=findViewById(R.id.txtMoney);
@@ -138,15 +145,14 @@ public class MoneyInDateRange extends AppCompatActivity {
 
             }
 
-            float avgamount=totalAmount/Days;
+            float avgamount=totalAmount/cursor.getCount();
             lytResult.setVisibility(View.VISIBLE); //show result layout
             txtDays.setText(String.valueOf(Days));
-            txtMoney.setText(totalAmount+" $");
-            txtAvg.setText(String.valueOf(avgamount)+ " $");
+            txtMoney.setText(String.format("%.2f$", totalAmount));
+            txtAvg.setText(String.format("%.2f$", avgamount));
 
 
         }
-
 
     }
 
@@ -154,5 +160,16 @@ public class MoneyInDateRange extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         finish();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }
