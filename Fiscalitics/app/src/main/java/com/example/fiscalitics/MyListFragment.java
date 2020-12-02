@@ -1,9 +1,12 @@
 package com.example.fiscalitics;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
@@ -69,9 +72,7 @@ public class MyListFragment extends Fragment {
 
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-                final int positionToRemove = i;
+            public void onItemClick(AdapterView<?> adapterView, View view, final int i, long l) {
 
                 Object obj = list.getItemAtPosition(i);
                 final String str = (String) obj;
@@ -82,24 +83,18 @@ public class MyListFragment extends Fragment {
                 builder.setTitle("About this transaction");
 
                 TransactionDbHelper db = new TransactionDbHelper(getActivity());
-                SQLiteDatabase s = db.getReadableDatabase(); //Read info from database and show it to the user upon request
+                final SQLiteDatabase s = db.getWritableDatabase(); //Read info from database and show it to the user upon request
                 String selectQuery = "SELECT * FROM transactionList WHERE _ID = " + (i + 1);
 
                 //Put together data from the entry to show
                 Cursor cursor = s.rawQuery(selectQuery, null);
                 cursor.moveToFirst();
-                builder.setMessage("Money Spent: " + cursor.getString(cursor.getColumnIndex(TransactionMain.TransactionEntry.COLUMN_VALUE))
+                builder.setMessage("ID: " + cursor.getInt(cursor.getColumnIndex(TransactionMain.TransactionEntry._ID))
+                + "\n\n" + "Money Spent: " + cursor.getString(cursor.getColumnIndex(TransactionMain.TransactionEntry.COLUMN_VALUE))
                 + "\n\n" + "Type: " + cursor.getString(cursor.getColumnIndex(TransactionMain.TransactionEntry.COLUMN_TYPE))
                 + "\n\n" + "Date/Time: " + cursor.getString(cursor.getColumnIndex(TransactionMain.TransactionEntry.COLUMN_DAY))
                 + " " + cursor.getString(cursor.getColumnIndex(TransactionMain.TransactionEntry.COLUMN_DATE))
                 + " " + cursor.getString(cursor.getColumnIndex(TransactionMain.TransactionEntry.COLUMN_TIME)));
-
-                builder.setNegativeButton("Delete", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-
-                    }
-                });
 
                 AlertDialog a = builder.create();
                 a.show();

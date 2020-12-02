@@ -56,6 +56,8 @@ public class MainActivity extends AppCompatActivity implements MyListFragment.My
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        getSupportActionBar().setTitle("Welcome to Fiscalitics");
+
         //Set animation direction based on touch event input
         String direction = getIntent().getStringExtra("direction");
         if(direction != null) {
@@ -296,12 +298,12 @@ public class MainActivity extends AppCompatActivity implements MyListFragment.My
         return true;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_exit_id:
-                finish();
-                System.exit(0);
+                finishAffinity();
                 break;
         }
         return true;

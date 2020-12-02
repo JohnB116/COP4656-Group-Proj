@@ -1,10 +1,12 @@
 package com.example.fiscalitics;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.github.mikephil.charting.components.AxisBase;
@@ -35,6 +37,10 @@ public class PieChart extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pie_chart);
 
+        //Add a back button and a new title
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setTitle("Expenditure Chart");
 
         com.github.mikephil.charting.charts.PieChart pieChart = findViewById(R.id.piechart);
 
@@ -59,6 +65,17 @@ public class PieChart extends AppCompatActivity {
                 return String.format("%.02f", value) +" $ ";
             }
         });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     private void loadData()
@@ -102,4 +119,5 @@ public class PieChart extends AppCompatActivity {
         }
 
     }
+
 }
