@@ -44,22 +44,25 @@ public class PieChart extends AppCompatActivity {
 
         com.github.mikephil.charting.charts.PieChart pieChart = findViewById(R.id.piechart);
 
-        loadData();
-        getEntries();
-        pieDataSet = new PieDataSet(pieEntries, "");
-        pieData = new PieData(pieDataSet);
+        loadData(); //Getiing data from the database and adding them to HashMap
+
+
+        getEntries(); // Add PieEntries to The pieEntries ArrayList
+
+        pieDataSet = new PieDataSet(pieEntries, "");  //Ceating Pie DataSet
+        pieData = new PieData(pieDataSet); // Creating PieData Object With PieDataSetEntries
         pieChart.setData(pieData);
-        pieChart.setEntryLabelColor(Color.BLACK);
+        pieChart.setEntryLabelColor(Color.BLACK); //Changing Color Of Entry to Black  Like  300$ Text Color To Black
         pieChart.setEntryLabelTextSize(10f);
         pieDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
-        pieDataSet.setSliceSpace(2f);
-        pieChart.setHoleRadius(0f);
+        pieDataSet.setSliceSpace(2f);  // Slice Space Space between two slices
+        pieChart.setHoleRadius(0f); // hole radius which is in mid of the pie chart you can try to change it
 
         pieDataSet.setValueTextColor(Color.BLACK);
         pieDataSet.setValueTextSize(10f);
 
         pieDataSet.setSliceSpace(5f);
-        pieDataSet.setValueFormatter(new ValueFormatter() {
+        pieDataSet.setValueFormatter(new ValueFormatter() { //This is value formatter by default we will have values like 20 or 30 but we wants to show a Dollar sign with that values so we are using this
             @Override
             public String getFormattedValue(float value) {
                 return String.format("%.02f", value) +" $ ";
@@ -89,13 +92,19 @@ public class PieChart extends AppCompatActivity {
                 String TYPE=cursor.getString(2);
                 String Value=cursor.getString(1);
                 Value= Value.replace("$","");
-                if(hashMap.get(TYPE)==null)
+                if(hashMap.get(TYPE)==null) // check if hasmap didnt have this key
                 {
-                    Float value = Float.parseFloat(Value.trim());
-                    hashMap.put(TYPE,value);
+                    Float value = Float.parseFloat(Value.trim()); // parse value to float from string
+                    hashMap.put(TYPE,value); // add this value to hashmap with key  e.g key=Groceries Value = 200
                 }
                 else
                 {
+                    //  else if hasmap already has that key which means hashmap has already stored with same key  then we wants to get that
+                    // value and the current value with that
+                    // e.g HashMap has already  item With key = grocery and value =200
+                    // then now we have another item with key=grocery and value=400
+                    // now what we will do is add 200 and 400 and update value of hasmap from 200 to 600
+                    // this is what we are doing below
                     Float val=hashMap.get(TYPE);
                     Float value = Float.parseFloat(Value.trim());
                     val=value+val;
@@ -112,7 +121,7 @@ public class PieChart extends AppCompatActivity {
 
     private void getEntries() {
         pieEntries = new ArrayList<>();
-        for(String key:hashMap.keySet())
+        for(String key:hashMap.keySet()) // loop to get all keys from hasmap
         {
             pieEntries.add(new PieEntry(hashMap.get(key), key));
 
