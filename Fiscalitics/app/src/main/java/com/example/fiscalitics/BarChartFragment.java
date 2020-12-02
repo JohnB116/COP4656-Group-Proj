@@ -38,7 +38,7 @@ public class BarChartFragment extends Fragment {
 
         chart = view.findViewById(R.id.barChart);
         List<BarEntry> entries = new ArrayList<>();
-        entries.add(new BarEntry(0f, 10f));
+        entries.add(new BarEntry(0f, 10f)); 
         entries.add(new BarEntry(1f, 20f));
         entries.add(new BarEntry(2f, 30f));
         entries.add(new BarEntry(3f, 40f));

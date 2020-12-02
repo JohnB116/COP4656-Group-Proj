@@ -3,6 +3,7 @@ package com.example.fiscalitics;
 import android.app.AlertDialog;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
@@ -70,8 +71,10 @@ public class MyListFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
+                final int positionToRemove = i;
+
                 Object obj = list.getItemAtPosition(i);
-                String str = (String) obj;
+                final String str = (String) obj;
                 listener.onListItemSelected(str);
 
                 //Launch dialog to enter Transaction information
@@ -90,6 +93,13 @@ public class MyListFragment extends Fragment {
                 + "\n\n" + "Date/Time: " + cursor.getString(cursor.getColumnIndex(TransactionMain.TransactionEntry.COLUMN_DAY))
                 + " " + cursor.getString(cursor.getColumnIndex(TransactionMain.TransactionEntry.COLUMN_DATE))
                 + " " + cursor.getString(cursor.getColumnIndex(TransactionMain.TransactionEntry.COLUMN_TIME)));
+
+                builder.setNegativeButton("Delete", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        
+                    }
+                });
 
                 AlertDialog a = builder.create();
                 a.show();
