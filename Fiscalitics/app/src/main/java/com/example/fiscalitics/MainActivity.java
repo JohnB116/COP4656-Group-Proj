@@ -8,6 +8,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Calendar;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -244,6 +245,7 @@ public class MainActivity extends AppCompatActivity implements MyListFragment.My
                                             listfrag.listItems.add(cursor.getString(5) + ": " + cursor.getString(1));
                                         } while (cursor.moveToNext());
                                         listfrag.adapter.notifyDataSetChanged();
+                                        listfrag.list.invalidateViews();
                                     }
                             }
                         });
@@ -256,10 +258,8 @@ public class MainActivity extends AppCompatActivity implements MyListFragment.My
                 //Amount input dialog
                 AlertDialog a = builder.create();
                 a.show();
-
             }
         });
-
     }
 
     //Launch the Summary activity when the user swipes right or left
