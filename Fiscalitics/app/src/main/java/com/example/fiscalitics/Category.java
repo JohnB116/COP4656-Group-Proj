@@ -1,17 +1,22 @@
 package com.example.fiscalitics;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
+import android.view.View;
 import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.PieEntry;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -35,67 +40,174 @@ public class Category extends AppCompatActivity {
 
         Button btnFood = (Button) findViewById(R.id.categoryFood);
         Button btnEntertainment = (Button) findViewById(R.id.categoryEntertainment);
-        Button btnTravel = (Button) findViewById(R.id.categoryHome);
+        Button btnHome = (Button) findViewById(R.id.categoryHome);
         Button btnCar = (Button) findViewById(R.id.categoryCar);
         Button btnEdu = (Button) findViewById(R.id.categoryEdu);
 
         Bundle bundle = new Bundle();
-        loadData();
-        getEntries();
 
-        bundle.putSerializable("hashmap", hashMap);
-        bundle.putSerializable("barentries",barEntries);
+        //Get database table
+        TransactionDbHelper db = new TransactionDbHelper(this);
+        final SQLiteDatabase s = db.getReadableDatabase(); //Read info from database and show it to the user upon request
+        String selectQuery = "SELECT * FROM transactionList";
+        final Cursor cursor = s.rawQuery(selectQuery, null);
 
-        BarChartFragment barChartFragment = new BarChartFragment();
-        barChartFragment.setArguments(bundle);
+        //For each onClickListener, display
+        //the category's total, average, and
+        //last date accessed from
+        //the SQLite table
+        btnFood.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cursor.moveToFirst();
+                float total = 0;
+                int count = 0;
+                String date = "";
+                do {
+                    if((cursor.getString(cursor.getColumnIndex(TransactionMain.TransactionEntry.COLUMN_TYPE))
+                            .trim().equals("Grocery/Food"))){
+                        String val = cursor.getString(cursor.getColumnIndex(TransactionMain.TransactionEntry.COLUMN_VALUE));
+                        String num = val.replace("$", "");
+                        total += Float.parseFloat(num);
+                        count++;
+                    }
 
-        FragmentTransaction trans = getSupportFragmentManager().beginTransaction();
-        trans.add(R.id.barChartFragmentContainer,barChartFragment,TAG);
-        trans.commit();
-    }
+                    if(cursor.isLast()){
+                        date = cursor.getString(cursor.getColumnIndex(TransactionMain.TransactionEntry.COLUMN_DATE));
+                    }
+                } while (cursor.moveToNext());
 
-    private void loadData() {
-        Cursor cursor = getContentResolver().query(TransactionMain.TransactionEntry.CONTENT_URI, null, null, null, null);
-        if(cursor != null && cursor.getCount() > 0){
-            cursor.moveToFirst();
-            do
-            {
-                String TYPE=cursor.getString(2);
-                String Value=cursor.getString(1);
-                Value= Value.replace("$","");
-                if(hashMap.get(TYPE)==null) // check if hasmap didnt have this key
-                {
-                    Float value = Float.parseFloat(Value.trim()); // parse value to float from string
-                    hashMap.put(TYPE,value); // add this value to hashmap with key  e.g key=Groceries Value = 200
-                }
-                else
-                {
-                    //  else if hasmap already has that key which means hashmap has already stored with same key  then we wants to get that
-                    // value and the current value with that
-                    // e.g HashMap has already  item With key = grocery and value =200
-                    // then now we have another item with key=grocery and value=400
-                    // now what we will do is add 200 and 400 and update value of hasmap from 200 to 600
-                    // this is what we are doing below
-                    Float val=hashMap.get(TYPE);
-                    Float value = Float.parseFloat(Value.trim());
-                    val=value+val;
-                    hashMap.put(TYPE,val);
+                AlertDialog.Builder builder = new AlertDialog.Builder(Category.this);
+                builder.setTitle("Grocery/Food");
+                builder.setMessage(String.format("Total: %.2f \n Average: %.2f \n Last Transaction: %s", total, total/count,
+                        date));
+                AlertDialog a = builder.create();
+                a.show();
 
-                }
-                /// System.out.println("DATA : 5 = "+cursor.getString(5) + ": 0 = " + cursor.getString(0)+" 1 = "+cursor.getString(1) + ": 2 " + cursor.getString(2 )+ ": 3 " + cursor.getString(3 ));
             }
-            while (cursor.moveToNext());
-        }
+        });
+        btnEntertainment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cursor.moveToFirst();
+                float total = 0;
+                int count = 0;
+                String date = "";
+                do {
+                    if((cursor.getString(cursor.getColumnIndex(TransactionMain.TransactionEntry.COLUMN_TYPE))
+                            .trim().equals("Social/Drinks/Entertainment"))){
+                        String val = cursor.getString(cursor.getColumnIndex(TransactionMain.TransactionEntry.COLUMN_VALUE));
+                        String num = val.replace("$", "");
+                        total += Float.parseFloat(num);
+                        count++;
+                    }
 
+                    if(cursor.isLast()){
+                        date = cursor.getString(cursor.getColumnIndex(TransactionMain.TransactionEntry.COLUMN_DATE));
+                    }
+                } while (cursor.moveToNext());
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(Category.this);
+                builder.setTitle("Social/Drinks/Entertainment");
+                builder.setMessage(String.format("Total: %.2f \n Average: %.2f \n Last Transaction: %s", total, total/count,
+                        date));
+                AlertDialog a = builder.create();
+                a.show();
+
+            }
+        });
+        btnHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cursor.moveToFirst();
+                float total = 0;
+                int count = 0;
+                String date = "";
+                do {
+                    if((cursor.getString(cursor.getColumnIndex(TransactionMain.TransactionEntry.COLUMN_TYPE))
+                            .trim().equals("Home/Living/Rent"))){
+                        String val = cursor.getString(cursor.getColumnIndex(TransactionMain.TransactionEntry.COLUMN_VALUE));
+                        String num = val.replace("$", "");
+                        total += Float.parseFloat(num);
+                        count++;
+                    }
+
+                    if(cursor.isLast()){
+                        date = cursor.getString(cursor.getColumnIndex(TransactionMain.TransactionEntry.COLUMN_DATE));
+                    }
+                } while (cursor.moveToNext());
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(Category.this);
+                builder.setTitle("Home/Living/Rent");
+                builder.setMessage(String.format("Total: %.2f \n Average: %.2f \n Last Transaction: %s", total, total/count,
+                        date));
+                AlertDialog a = builder.create();
+                a.show();
+
+            }
+        });
+        btnCar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cursor.moveToFirst();
+                float total = 0;
+                int count = 0;
+                String date = "";
+                do {
+                    if((cursor.getString(cursor.getColumnIndex(TransactionMain.TransactionEntry.COLUMN_TYPE))
+                            .trim().equals("Gas/Automotive"))){
+                        String val = cursor.getString(cursor.getColumnIndex(TransactionMain.TransactionEntry.COLUMN_VALUE));
+                        String num = val.replace("$", "");
+                        total += Float.parseFloat(num);
+                        count++;
+                    }
+
+                    if(cursor.isLast()){
+                        date = cursor.getString(cursor.getColumnIndex(TransactionMain.TransactionEntry.COLUMN_DATE));
+                    }
+                } while (cursor.moveToNext());
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(Category.this);
+                builder.setTitle("Gas/Automotive");
+                builder.setMessage(String.format("Total: %.2f \n Average: %.2f \n Last Transaction: %s", total, total/count,
+                date));
+                AlertDialog a = builder.create();
+                a.show();
+
+            }
+        });
+        btnEdu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cursor.moveToFirst();
+                float total = 0;
+                int count = 0;
+                String date = "";
+                do {
+                    if((cursor.getString(cursor.getColumnIndex(TransactionMain.TransactionEntry.COLUMN_TYPE))
+                            .trim().equals("School or Study Supplies"))){
+                        String val = cursor.getString(cursor.getColumnIndex(TransactionMain.TransactionEntry.COLUMN_VALUE));
+                        String num = val.replace("$", "");
+                        total += Float.parseFloat(num);
+                        count++;
+                    }
+
+                    if(cursor.isLast()){
+                        date = cursor.getString(cursor.getColumnIndex(TransactionMain.TransactionEntry.COLUMN_DATE));
+                    }
+                } while (cursor.moveToNext());
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(Category.this);
+                builder.setTitle("School or Study Supplies");
+                builder.setMessage(String.format("Total: %.2f \n Average: %.2f \n Last Transaction: %s", total, total/count,
+                        date));
+                AlertDialog a = builder.create();
+                a.show();
+
+            }
+        });
     }
 
-    private void getEntries() {
-        barEntries = new ArrayList<>();
-        for(String key:hashMap.keySet()) // loop to get all keys from hasmap
-            {
-            barEntries.add(new BarEntry( 0.1f, hashMap.get(key)));
-        }
-    }
 
     //Launch a main activity when the user swipes right
     public boolean onTouchEvent(MotionEvent touchEvent) {

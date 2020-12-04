@@ -13,7 +13,8 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="25dp"
-            android:text="Your Spending Habits"
+            android:textStyle="italic"
+            android:text="Your Category Summaries"
             android:textColor="@color/design_default_color_on_secondary"
             android:textSize="32sp" />
 
