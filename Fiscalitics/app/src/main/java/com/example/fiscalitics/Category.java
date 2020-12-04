@@ -56,18 +56,22 @@ public class Category extends AppCompatActivity {
         //the category's total, average, and
         //last date accessed from
         //the SQLite table
+        btnFood.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cursor.moveToFirst();
+                float total = 0;
+                int count = 0;
+                String date = "";
 
-        if(cursor.getCount() == 0){
-            //
-        }
-        else {
-            btnFood.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    cursor.moveToFirst();
-                    float total = 0;
-                    int count = 0;
-                    String date = "";
+                if(cursor.getCount() == 0){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(Category.this);
+                    builder.setTitle("No transactions found");
+                    builder.setMessage("Make a transaction to get started");
+                    AlertDialog a = builder.create();
+                    a.show();
+                }
+                else {
                     do {
                         if ((cursor.getString(cursor.getColumnIndex(TransactionMain.TransactionEntry.COLUMN_TYPE))
                                 .trim().equals("Grocery/Food"))) {
@@ -84,20 +88,30 @@ public class Category extends AppCompatActivity {
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(Category.this);
                     builder.setTitle("Grocery/Food");
-                    builder.setMessage(String.format("Total: %.2f \n Average: %.2f \n Last Transaction: %s", total, total / count,
+                    builder.setMessage(String.format("Total: %.2f \nAverage: %.2f \nLast Transaction: %s", total, total / count,
                             date));
                     AlertDialog a = builder.create();
                     a.show();
-
                 }
-            });
-            btnEntertainment.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    cursor.moveToFirst();
-                    float total = 0;
-                    int count = 0;
-                    String date = "";
+
+            }
+        });
+        btnEntertainment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cursor.moveToFirst();
+                float total = 0;
+                int count = 0;
+                String date = "";
+
+                if(cursor.getCount() == 0){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(Category.this);
+                    builder.setTitle("No transactions found");
+                    builder.setMessage("Make a transaction to get started");
+                    AlertDialog a = builder.create();
+                    a.show();
+                }
+                else {
                     do {
                         if ((cursor.getString(cursor.getColumnIndex(TransactionMain.TransactionEntry.COLUMN_TYPE))
                                 .trim().equals("Social/Drinks/Entertainment"))) {
@@ -114,20 +128,30 @@ public class Category extends AppCompatActivity {
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(Category.this);
                     builder.setTitle("Social/Drinks/Entertainment");
-                    builder.setMessage(String.format("Total: %.2f \n Average: %.2f \n Last Transaction: %s", total, total / count,
+                    builder.setMessage(String.format("Total: %.2f \nAverage: %.2f\nLast Transaction: %s", total, total / count,
                             date));
                     AlertDialog a = builder.create();
                     a.show();
-
                 }
-            });
-            btnHome.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    cursor.moveToFirst();
-                    float total = 0;
-                    int count = 0;
-                    String date = "";
+            }
+        });
+        btnHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cursor.moveToFirst();
+                float total = 0;
+                int count = 0;
+                String date = "";
+
+                if(cursor.getCount() == 0){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(Category.this);
+                    builder.setTitle("No transactions found");
+                    builder.setMessage("Make a transaction to get started");
+                    AlertDialog a = builder.create();
+                    a.show();
+                }
+
+                else {
                     do {
                         if ((cursor.getString(cursor.getColumnIndex(TransactionMain.TransactionEntry.COLUMN_TYPE))
                                 .trim().equals("Home/Living/Rent"))) {
@@ -144,20 +168,31 @@ public class Category extends AppCompatActivity {
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(Category.this);
                     builder.setTitle("Home/Living/Rent");
-                    builder.setMessage(String.format("Total: %.2f \n Average: %.2f \n Last Transaction: %s", total, total / count,
+                    builder.setMessage(String.format("Total: %.2f \nAverage: %.2f \nLast Transaction: %s", total, total / count,
                             date));
                     AlertDialog a = builder.create();
                     a.show();
-
                 }
-            });
-            btnCar.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    cursor.moveToFirst();
-                    float total = 0;
-                    int count = 0;
-                    String date = "";
+
+            }
+        });
+        btnCar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cursor.moveToFirst();
+                float total = 0;
+                int count = 0;
+                String date = "";
+
+                if(cursor.getCount() == 0){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(Category.this);
+                    builder.setTitle("No transactions found");
+                    builder.setMessage("Make a transaction to get started");
+                    AlertDialog a = builder.create();
+                    a.show();
+                }
+
+                else {
                     do {
                         if ((cursor.getString(cursor.getColumnIndex(TransactionMain.TransactionEntry.COLUMN_TYPE))
                                 .trim().equals("Gas/Automotive"))) {
@@ -174,20 +209,30 @@ public class Category extends AppCompatActivity {
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(Category.this);
                     builder.setTitle("Gas/Automotive");
-                    builder.setMessage(String.format("Total: %.2f \n Average: %.2f \n Last Transaction: %s", total, total / count,
+                    builder.setMessage(String.format("Total: %.2f \nAverage: %.2f \nLast Transaction: %s", total, total / count,
                             date));
                     AlertDialog a = builder.create();
                     a.show();
-
                 }
-            });
-            btnEdu.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    cursor.moveToFirst();
-                    float total = 0;
-                    int count = 0;
-                    String date = "";
+            }
+        });
+        btnEdu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cursor.moveToFirst();
+                float total = 0;
+                int count = 0;
+                String date = "";
+
+                if(cursor.getCount() == 0){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(Category.this);
+                    builder.setTitle("No transactions found");
+                    builder.setMessage("Make a transaction to get started");
+                    AlertDialog a = builder.create();
+                    a.show();
+                }
+
+                else {
                     do {
                         if ((cursor.getString(cursor.getColumnIndex(TransactionMain.TransactionEntry.COLUMN_TYPE))
                                 .trim().equals("School or Study Supplies"))) {
@@ -204,14 +249,14 @@ public class Category extends AppCompatActivity {
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(Category.this);
                     builder.setTitle("School or Study Supplies");
-                    builder.setMessage(String.format("Total: %.2f \n Average: %.2f \n Last Transaction: %s", total, total / count,
+                    builder.setMessage(String.format("Total: %.2f \nAverage: %.2f \nLast Transaction: %s", total, total / count,
                             date));
                     AlertDialog a = builder.create();
                     a.show();
 
                 }
-            });
-        }
+            }
+        });
     }
 
 

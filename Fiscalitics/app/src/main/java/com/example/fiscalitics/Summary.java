@@ -49,38 +49,45 @@ public class Summary extends AppCompatActivity {
 
         //Monthly spending textview
         TextView monthly = (TextView) findViewById(R.id.month);
+        TextView daily = (TextView) findViewById(R.id.day);
         float monthTotal = 0.0f;
+        float dayTotal = 0.0f;
         TransactionDbHelper db = new TransactionDbHelper(this);
         final SQLiteDatabase s = db.getReadableDatabase(); //Read info from database and show it to the user upon request
         String selectQuery = "SELECT * FROM transactionList";
         Cursor cursor = s.rawQuery(selectQuery, null);
-        cursor.moveToFirst();
-        DateTimeFormatter date = DateTimeFormatter.ofPattern("MM");
-        do {
-            if((cursor.getString(cursor.getColumnIndex(TransactionMain.TransactionEntry.COLUMN_DATE))
-                    .substring(0,2)).trim().equals(LocalDateTime.now().format(date))){
-                String val = cursor.getString(cursor.getColumnIndex(TransactionMain.TransactionEntry.COLUMN_VALUE));
-                String num = val.replace("$", "");
-                monthTotal += Float.parseFloat(num);
-            }
-        } while (cursor.moveToNext());
-        monthly.setText("This Month's Expenditure: " + String.format("$%.2f", monthTotal));
+
+        if(cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            DateTimeFormatter date = DateTimeFormatter.ofPattern("MM");
+            do {
+                if ((cursor.getString(cursor.getColumnIndex(TransactionMain.TransactionEntry.COLUMN_DATE))
+                        .substring(0, 2)).trim().equals(LocalDateTime.now().format(date))) {
+                    String val = cursor.getString(cursor.getColumnIndex(TransactionMain.TransactionEntry.COLUMN_VALUE));
+                    String num = val.replace("$", "");
+                    monthTotal += Float.parseFloat(num);
+                }
+            } while (cursor.moveToNext());
+            monthly.setText("This Month's Expenditure: " + String.format("$%.2f", monthTotal));
 
 
-        //Daily Spending textview
-        TextView daily = (TextView) findViewById(R.id.day);
-        float dayTotal = 0.0f;
-        cursor.moveToFirst();
-        date = DateTimeFormatter.ofPattern("dd");
-        do {
-            if((cursor.getString(cursor.getColumnIndex(TransactionMain.TransactionEntry.COLUMN_DATE))
-                    .substring(3,5)).trim().equals(LocalDateTime.now().format(date))){
-                String val = cursor.getString(cursor.getColumnIndex(TransactionMain.TransactionEntry.COLUMN_VALUE));
-                String num = val.replace("$", "");
-                dayTotal += Float.parseFloat(num);
-            }
-        } while (cursor.moveToNext());
-        daily.setText("Today's Expenditure: " + String.format("$%.2f", dayTotal));
+            //Daily Spending textview
+            cursor.moveToFirst();
+            date = DateTimeFormatter.ofPattern("dd");
+            do {
+                if ((cursor.getString(cursor.getColumnIndex(TransactionMain.TransactionEntry.COLUMN_DATE))
+                        .substring(3, 5)).trim().equals(LocalDateTime.now().format(date))) {
+                    String val = cursor.getString(cursor.getColumnIndex(TransactionMain.TransactionEntry.COLUMN_VALUE));
+                    String num = val.replace("$", "");
+                    dayTotal += Float.parseFloat(num);
+                }
+            } while (cursor.moveToNext());
+            daily.setText("Today's Expenditure: " + String.format("$%.2f", dayTotal));
+        }
+        else{
+            monthly.setText("This Month's Expenditure: $0.00");
+            daily.setText("Today's Expenditure: $0.00");
+        }
 
 
         //Set up calendar that displays activity on chosen date
