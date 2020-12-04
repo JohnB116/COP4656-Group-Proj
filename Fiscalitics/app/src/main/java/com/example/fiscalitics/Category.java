@@ -56,156 +56,162 @@ public class Category extends AppCompatActivity {
         //the category's total, average, and
         //last date accessed from
         //the SQLite table
-        btnFood.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                cursor.moveToFirst();
-                float total = 0;
-                int count = 0;
-                String date = "";
-                do {
-                    if((cursor.getString(cursor.getColumnIndex(TransactionMain.TransactionEntry.COLUMN_TYPE))
-                            .trim().equals("Grocery/Food"))){
-                        String val = cursor.getString(cursor.getColumnIndex(TransactionMain.TransactionEntry.COLUMN_VALUE));
-                        String num = val.replace("$", "");
-                        total += Float.parseFloat(num);
-                        count++;
-                    }
 
-                    if(cursor.isLast()){
-                        date = cursor.getString(cursor.getColumnIndex(TransactionMain.TransactionEntry.COLUMN_DATE));
-                    }
-                } while (cursor.moveToNext());
+        if(cursor.getCount() == 0){
+            //
+        }
+        else {
+            btnFood.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    cursor.moveToFirst();
+                    float total = 0;
+                    int count = 0;
+                    String date = "";
+                    do {
+                        if ((cursor.getString(cursor.getColumnIndex(TransactionMain.TransactionEntry.COLUMN_TYPE))
+                                .trim().equals("Grocery/Food"))) {
+                            String val = cursor.getString(cursor.getColumnIndex(TransactionMain.TransactionEntry.COLUMN_VALUE));
+                            String num = val.replace("$", "");
+                            total += Float.parseFloat(num);
+                            count++;
+                        }
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(Category.this);
-                builder.setTitle("Grocery/Food");
-                builder.setMessage(String.format("Total: %.2f \n Average: %.2f \n Last Transaction: %s", total, total/count,
-                        date));
-                AlertDialog a = builder.create();
-                a.show();
+                        if (cursor.isLast()) {
+                            date = cursor.getString(cursor.getColumnIndex(TransactionMain.TransactionEntry.COLUMN_DATE));
+                        }
+                    } while (cursor.moveToNext());
 
-            }
-        });
-        btnEntertainment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                cursor.moveToFirst();
-                float total = 0;
-                int count = 0;
-                String date = "";
-                do {
-                    if((cursor.getString(cursor.getColumnIndex(TransactionMain.TransactionEntry.COLUMN_TYPE))
-                            .trim().equals("Social/Drinks/Entertainment"))){
-                        String val = cursor.getString(cursor.getColumnIndex(TransactionMain.TransactionEntry.COLUMN_VALUE));
-                        String num = val.replace("$", "");
-                        total += Float.parseFloat(num);
-                        count++;
-                    }
+                    AlertDialog.Builder builder = new AlertDialog.Builder(Category.this);
+                    builder.setTitle("Grocery/Food");
+                    builder.setMessage(String.format("Total: %.2f \n Average: %.2f \n Last Transaction: %s", total, total / count,
+                            date));
+                    AlertDialog a = builder.create();
+                    a.show();
 
-                    if(cursor.isLast()){
-                        date = cursor.getString(cursor.getColumnIndex(TransactionMain.TransactionEntry.COLUMN_DATE));
-                    }
-                } while (cursor.moveToNext());
+                }
+            });
+            btnEntertainment.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    cursor.moveToFirst();
+                    float total = 0;
+                    int count = 0;
+                    String date = "";
+                    do {
+                        if ((cursor.getString(cursor.getColumnIndex(TransactionMain.TransactionEntry.COLUMN_TYPE))
+                                .trim().equals("Social/Drinks/Entertainment"))) {
+                            String val = cursor.getString(cursor.getColumnIndex(TransactionMain.TransactionEntry.COLUMN_VALUE));
+                            String num = val.replace("$", "");
+                            total += Float.parseFloat(num);
+                            count++;
+                        }
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(Category.this);
-                builder.setTitle("Social/Drinks/Entertainment");
-                builder.setMessage(String.format("Total: %.2f \n Average: %.2f \n Last Transaction: %s", total, total/count,
-                        date));
-                AlertDialog a = builder.create();
-                a.show();
+                        if (cursor.isLast()) {
+                            date = cursor.getString(cursor.getColumnIndex(TransactionMain.TransactionEntry.COLUMN_DATE));
+                        }
+                    } while (cursor.moveToNext());
 
-            }
-        });
-        btnHome.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                cursor.moveToFirst();
-                float total = 0;
-                int count = 0;
-                String date = "";
-                do {
-                    if((cursor.getString(cursor.getColumnIndex(TransactionMain.TransactionEntry.COLUMN_TYPE))
-                            .trim().equals("Home/Living/Rent"))){
-                        String val = cursor.getString(cursor.getColumnIndex(TransactionMain.TransactionEntry.COLUMN_VALUE));
-                        String num = val.replace("$", "");
-                        total += Float.parseFloat(num);
-                        count++;
-                    }
+                    AlertDialog.Builder builder = new AlertDialog.Builder(Category.this);
+                    builder.setTitle("Social/Drinks/Entertainment");
+                    builder.setMessage(String.format("Total: %.2f \n Average: %.2f \n Last Transaction: %s", total, total / count,
+                            date));
+                    AlertDialog a = builder.create();
+                    a.show();
 
-                    if(cursor.isLast()){
-                        date = cursor.getString(cursor.getColumnIndex(TransactionMain.TransactionEntry.COLUMN_DATE));
-                    }
-                } while (cursor.moveToNext());
+                }
+            });
+            btnHome.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    cursor.moveToFirst();
+                    float total = 0;
+                    int count = 0;
+                    String date = "";
+                    do {
+                        if ((cursor.getString(cursor.getColumnIndex(TransactionMain.TransactionEntry.COLUMN_TYPE))
+                                .trim().equals("Home/Living/Rent"))) {
+                            String val = cursor.getString(cursor.getColumnIndex(TransactionMain.TransactionEntry.COLUMN_VALUE));
+                            String num = val.replace("$", "");
+                            total += Float.parseFloat(num);
+                            count++;
+                        }
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(Category.this);
-                builder.setTitle("Home/Living/Rent");
-                builder.setMessage(String.format("Total: %.2f \n Average: %.2f \n Last Transaction: %s", total, total/count,
-                        date));
-                AlertDialog a = builder.create();
-                a.show();
+                        if (cursor.isLast()) {
+                            date = cursor.getString(cursor.getColumnIndex(TransactionMain.TransactionEntry.COLUMN_DATE));
+                        }
+                    } while (cursor.moveToNext());
 
-            }
-        });
-        btnCar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                cursor.moveToFirst();
-                float total = 0;
-                int count = 0;
-                String date = "";
-                do {
-                    if((cursor.getString(cursor.getColumnIndex(TransactionMain.TransactionEntry.COLUMN_TYPE))
-                            .trim().equals("Gas/Automotive"))){
-                        String val = cursor.getString(cursor.getColumnIndex(TransactionMain.TransactionEntry.COLUMN_VALUE));
-                        String num = val.replace("$", "");
-                        total += Float.parseFloat(num);
-                        count++;
-                    }
+                    AlertDialog.Builder builder = new AlertDialog.Builder(Category.this);
+                    builder.setTitle("Home/Living/Rent");
+                    builder.setMessage(String.format("Total: %.2f \n Average: %.2f \n Last Transaction: %s", total, total / count,
+                            date));
+                    AlertDialog a = builder.create();
+                    a.show();
 
-                    if(cursor.isLast()){
-                        date = cursor.getString(cursor.getColumnIndex(TransactionMain.TransactionEntry.COLUMN_DATE));
-                    }
-                } while (cursor.moveToNext());
+                }
+            });
+            btnCar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    cursor.moveToFirst();
+                    float total = 0;
+                    int count = 0;
+                    String date = "";
+                    do {
+                        if ((cursor.getString(cursor.getColumnIndex(TransactionMain.TransactionEntry.COLUMN_TYPE))
+                                .trim().equals("Gas/Automotive"))) {
+                            String val = cursor.getString(cursor.getColumnIndex(TransactionMain.TransactionEntry.COLUMN_VALUE));
+                            String num = val.replace("$", "");
+                            total += Float.parseFloat(num);
+                            count++;
+                        }
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(Category.this);
-                builder.setTitle("Gas/Automotive");
-                builder.setMessage(String.format("Total: %.2f \n Average: %.2f \n Last Transaction: %s", total, total/count,
-                date));
-                AlertDialog a = builder.create();
-                a.show();
+                        if (cursor.isLast()) {
+                            date = cursor.getString(cursor.getColumnIndex(TransactionMain.TransactionEntry.COLUMN_DATE));
+                        }
+                    } while (cursor.moveToNext());
 
-            }
-        });
-        btnEdu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                cursor.moveToFirst();
-                float total = 0;
-                int count = 0;
-                String date = "";
-                do {
-                    if((cursor.getString(cursor.getColumnIndex(TransactionMain.TransactionEntry.COLUMN_TYPE))
-                            .trim().equals("School or Study Supplies"))){
-                        String val = cursor.getString(cursor.getColumnIndex(TransactionMain.TransactionEntry.COLUMN_VALUE));
-                        String num = val.replace("$", "");
-                        total += Float.parseFloat(num);
-                        count++;
-                    }
+                    AlertDialog.Builder builder = new AlertDialog.Builder(Category.this);
+                    builder.setTitle("Gas/Automotive");
+                    builder.setMessage(String.format("Total: %.2f \n Average: %.2f \n Last Transaction: %s", total, total / count,
+                            date));
+                    AlertDialog a = builder.create();
+                    a.show();
 
-                    if(cursor.isLast()){
-                        date = cursor.getString(cursor.getColumnIndex(TransactionMain.TransactionEntry.COLUMN_DATE));
-                    }
-                } while (cursor.moveToNext());
+                }
+            });
+            btnEdu.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    cursor.moveToFirst();
+                    float total = 0;
+                    int count = 0;
+                    String date = "";
+                    do {
+                        if ((cursor.getString(cursor.getColumnIndex(TransactionMain.TransactionEntry.COLUMN_TYPE))
+                                .trim().equals("School or Study Supplies"))) {
+                            String val = cursor.getString(cursor.getColumnIndex(TransactionMain.TransactionEntry.COLUMN_VALUE));
+                            String num = val.replace("$", "");
+                            total += Float.parseFloat(num);
+                            count++;
+                        }
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(Category.this);
-                builder.setTitle("School or Study Supplies");
-                builder.setMessage(String.format("Total: %.2f \n Average: %.2f \n Last Transaction: %s", total, total/count,
-                        date));
-                AlertDialog a = builder.create();
-                a.show();
+                        if (cursor.isLast()) {
+                            date = cursor.getString(cursor.getColumnIndex(TransactionMain.TransactionEntry.COLUMN_DATE));
+                        }
+                    } while (cursor.moveToNext());
 
-            }
-        });
+                    AlertDialog.Builder builder = new AlertDialog.Builder(Category.this);
+                    builder.setTitle("School or Study Supplies");
+                    builder.setMessage(String.format("Total: %.2f \n Average: %.2f \n Last Transaction: %s", total, total / count,
+                            date));
+                    AlertDialog a = builder.create();
+                    a.show();
+
+                }
+            });
+        }
     }
 
 
